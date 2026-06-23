@@ -1,0 +1,82 @@
+# Mintable
+
+**Source:** https://github.com/kevinschaich/mintable
+
+## Overview
+
+This tutorial covers the key resources and tools from the [kevinschaich/mintable](https://github.com/kevinschaich/mintable) project.
+
+## Quickstart
+
+Requires `node >= v11.0.0`.
+
+1. Sign up for [Plaid's Free Plan](https://plaid.com/pricing/).
+2. Install Mintable:
+
+    ```bash
+    npm install -g mintable
+    mintable setup
+    ```
+
+3. Update your account balances/transactions:
+
+    ```
+    mintable fetch
+    ```
+
+> **Note:** If you're already a version `1.x.x` user, you can [migrate your existing configuration to version `2.x.x`](./docs/README.md#migrating-from-v1xx).
+
+## Documentation
+
+Check out the full documentation [in the `./docs` folder](./docs/README.md).
+
+## FAQs
+
+**WTF is 'Mintable'?!**
+
+> **min·ta·ble**: _noun._
+> 1. An open-source tool to automate your personal finances – for free, with no ads, and no data collection. Derived from *mint* (the [wildly popular personal finance app from Intuit](https://www.mint.com/)) + *table* (a spreadsheet).
+
+**Do I have to use Plaid?**
+
+* Nope. You can [import transactions from a CSV bank statement](./docs/README.md#manually--on-your-local-machine--via-csv-bank-statements) exclusively on your local machine. We also have [templates](./docs/templates) to get you started.
+
+**Do I have to use Google Sheets?**
+
+* Nope. You can [export your account balances & transactions to a CSV file](./docs/README.md#on-your-local-machine--via-csv-files) exclusively on your local machine.
+
+**Do I have to manually run this every time I want new transactions in my spreadsheet?**
+
+* Nope. You can automate it for free using [BitBar](./docs/README.md#automatically-in-your-macs-menu-bar--via-bitbar), [`cron`](./docs/README.md#automatically-in-your-local-machines-terminal--via-cron), or [GitHub Actions](./docs/README.md#automatically-in-the-cloud--via-github-actions).
+
+**How do I use it with banks outside the US?**
+
+* Fork & edit the [country codes here](https://github.com/kevinschaich/mintable/blob/377257a6040ed9b6dd93d88435e53c48108b5806/src/integrations/plaid/plaidIntegration.ts#L126). Default support is for US banks.
+
+**How do I use it with Windows?**
+
+* Windows is not natively supported but you can try [this](https://github.com/kevinschaich/mintable/issues/125#issuecomment-1253961155).
+
+**It's not working!**
+
+- [File an issue](https://github.com/kevinschaich/mintable/issues)
+
+## Alternatives
+
+- [**Money in Excel**](https://www.microsoft.com/en-us/microsoft-365/blog/2020/06/15/introducing-money-excel-easier-manage-finances/): Recently announced partnership between Microsoft/Plaid. Requires a Microsoft 365 subscription ($70+/year).
+- [**Mint**](https://www.mint.com/): Owned by Intuit (TurboTax). Apps for iOS/Android/Web.
+- [**build-your-own-mint**](https://github.com/yyx990803/build-your-own-mint): Some assembly required. More flexible.
+
+## Key Resources
+
+| Resource | Link |
+|----------|------|
+| Plaid's Free Plan | [https://plaid.com/pricing/](https://plaid.com/pricing/) |
+| wildly popular personal finance app from Intuit | [https://www.mint.com/](https://www.mint.com/) |
+| country codes here | [https://github.com/kevinschaich/mintable/blob/377257a6040ed9b6dd93d88435e53c48108b5806/src/integrations/plaid/plaidIntegration.ts#L126](https://github.com/kevinschaich/mintable/blob/377257a6040ed9b6dd93d88435e53c48108b5806/src/integrations/plaid/plaidIntegration.ts#L126) |
+| this | [https://github.com/kevinschaich/mintable/issues/125#issuecomment-1253961155](https://github.com/kevinschaich/mintable/issues/125#issuecomment-1253961155) |
+| File an issue | [https://github.com/kevinschaich/mintable/issues](https://github.com/kevinschaich/mintable/issues) |
+| **Money in Excel** | [https://www.microsoft.com/en-us/microsoft-365/blog/2020/06/15/introducing-money-excel-easier-manage-finances/](https://www.microsoft.com/en-us/microsoft-365/blog/2020/06/15/introducing-money-excel-easier-manage-finances/) |
+| **Mint** | [https://www.mint.com/](https://www.mint.com/) |
+| **build-your-own-mint** | [https://github.com/yyx990803/build-your-own-mint](https://github.com/yyx990803/build-your-own-mint) |
+

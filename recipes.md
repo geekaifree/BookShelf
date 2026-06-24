@@ -1,118 +1,311 @@
-# 很棒的食谱
+# Tandoor 食谱管理教程
 
-**来源：** https://github.com/bbbenji/awesome-recipes
+## 简介
 
-＃＃ 概述
+Tandoor Recipes 是一款开源食谱管理系统，帮助您组织、存储和分享烹饪食谱。它提供膳食计划、购物清单生成和营养分析功能。
 
-本教程涵盖了 [bbbenji/awesome-recipes](https://github.com/bbbenji/awesome-recipes) 项目中的关键资源和工具。
+| 特性 | 描述 |
+|---------|-------------|
+| 食谱存储 | 使用食材、步骤和照片组织食谱 |
+| 膳食计划 | 为数天、数周或数月规划膳食 |
+| 购物清单 | 从膳食计划自动生成购物清单 |
+| 营养信息 | 计算卡路里和宏量营养素 |
+| 导入 | 从网站和其他格式导入食谱 |
 
-## 很棒的食谱
+## 架构
 
-> 精选的美味食谱清单。
+### 技术栈
 
-＃＃ 内容
+| 组件 | 技术 |
+|-----------|-----------|
+| 前端 | Vue.js 响应式设计 |
+| 后端 | Django (Python) REST API |
+| 数据库 | PostgreSQL 或 SQLite |
+| 搜索 | 全文搜索功能 |
+| 存储 | 图片和媒体的文件存储 |
 
-- [收藏](#collections)
-- [调味品及酱料](#condiments--sauces)
-- [菜肴](#菜肴)
-- [烘焙](#烘焙)
-- [饮料和鸡尾酒](#drinks--cocktails)
-- [工具](#tools)
+### 数据模型
 
-## 收藏
+| 实体 | 描述 |
+|--------|-------------|
+| Recipe | 包含食材、步骤和元数据的完整食谱 |
+| Ingredient | 带有营养数据的单个食材 |
+| Step | 食谱中的烹饪说明 |
+| Food | 带有营养信息的食材数据库 |
+| Unit | 计量单位（克、杯、汤匙） |
+| Keyword | 用于分类食谱的标签 |
+| Meal plan | 特定日期的计划食谱 |
+| Shopping list | 生成的所需食材清单 |
 
-- [食谱](https://github.com/panozzaj/recipes) - 安东尼的烹饪食谱集。
-- [食物食谱](https://github.com/obfuscurity/food-recipes) - 诚实至善的“真正的食物”食谱..
-- [菜谱](https://github.com/dolph/recipes) - 版本控制：这就是晚餐。
-- [recipyzer](https://github.com/kmcconnell/recipyzer) - 精心组织的食谱存储库，按美食、季节、假期和饮食需求分类。
-- [1337 Noms The Hacker Cookbook](https://github.com/DEAD10C5/1337-Noms-The-Hacker-Cookbook) - 食品食品。
-- [auntiesrecipes](https://github.com/user24/auntiesrecipes) - BBC 美食食谱的可搜索档案。
-- [Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) - 程序员在家做饭指南（简体中文）。
-- [面包代码](https://github.com/hendricius/the-bread-code) - 学习如何以程序员的方式掌握烘焙艺术。
-- [烹饪食谱](https://github.com/usmanayubsh/cooking-recipes) - 我的烹饪冒险经历。
-- [Con Sazón](https://github.com/AshtarCodes/Con-Sazon) - 一款以拉丁裔和 BIPOC 美食为中心的膳食计划应用程序和食谱收集。
-- [Tasty Cooking](https://github.com/douvy/tasty-cooking) - 一个针对性能进行优化的现代食谱收集网站，
-  可访问性和视觉吸引力，没有杂乱。
-- [YunYouJun/cook](https://github.com/YunYouJun/cook) - 🍲 好啦，开始做饭吧！中国菜谱合集。
+## 安装
 
-## 调味品/酱料
+### Docker 部署
 
-- [Recipe El Fuego Viviente](https://github.com/aweijnitz/recipe-el_fuego_viviente) - 发酵辣椒酱。
+```bash
+docker run -d \
+  --name=tandoor \
+  -p 8080:8080 \
+  -v ./static:/opt/recipes/staticfiles \
+  -v ./media:/opt/recipes/media \
+  -e SECRET_KEY=your_secret_key \
+  -e DB_ENGINE=django.db.backends.postgresql \
+  -e POSTGRES_HOST=db \
+  -e POSTGRES_PASSWORD=db_password \
+  --restart unless-stopped \
+  vabene1111/recipes:latest
+```
 
-## 菜肴
+### Docker Compose
 
-- [pizza-dough](https://github.com/hendricius/pizza-dough) - 这个食谱致力于帮助您制作那不勒斯披萨的最佳披萨面团。
-- [tacofancy](https://github.com/sinker/tacofancy) - 社区驱动的 taco 存储库。
-- [性感炸鸡排](https://gist.github.com/buggymcbugfix/602f34214a37d972993830c2c9526cf0) - 炸鸡排，但是很性感
+```yaml
+version: "3.8"
+services:
+  web:
+    image: vabene1111/recipes:latest
+    container_name: tandoor
+    ports:
+      - "8080:8080"
+    environment:
+      - SECRET_KEY=your_secret_key
+      - DB_ENGINE=django.db.backends.postgresql
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - POSTGRES_USER=tandoor
+      - POSTGRES_PASSWORD=secure_password
+      - POSTGRES_DB=tandoor
+    volumes:
+      - ./static:/opt/recipes/staticfiles
+      - ./media:/opt/recipes/media
+    depends_on:
+      - db
+    restart: unless-stopped
 
-＃＃ 烘烤
+  db:
+    image: postgres:15
+    container_name: tandoor-db
+    environment:
+      - POSTGRES_USER=tandoor
+      - POSTGRES_PASSWORD=secure_password
+      - POSTGRES_DB=tandoor
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
-- [The Sourdough Framework](https://github.com/hendricius/the-sourdough-framework) - 在家制作酸面包的开源书籍。
-- [开源百吉饼](https://github.com/andrewkern/bagels) - 旨在成为最好的开源百吉饼食谱。
-- [开源面团压片机](https://github.com/frenchguycooking/doughsheeter) - 适合家庭面包师的 3D 打印面团压片机。
+volumes:
+  postgres_data:
+```
 
-## 饮料和鸡尾酒
+## 食谱管理
 
-- [酒吧助理](https://github.com/karlomikus/bar-assistant) - 用于管理家庭酒吧和鸡尾酒配方的自托管应用程序。
-- [CocktailBerry](https://github.com/AndreWohnsland/CocktailBerry) - 基于 Raspberry Pi 的 DIY 鸡尾酒制作机软件。
-- [Open Drinks](https://github.com/alfg/opendrinks) - 社区驱动的饮料和鸡尾酒配方集合。
+### 创建食谱
 
-＃＃ 工具
+| 字段 | 描述 | 必填 |
+|-------|-------------|----------|
+| 名称 | 食谱标题 | 是 |
+| 描述 | 菜品的简要概述 | 否 |
+| 份数 | 份数 | 是 |
+| 准备时间 | 准备时间（分钟） | 否 |
+| 烹饪时间 | 烹饪时间（分钟） | 否 |
+| 等待时间 | 静置/腌制时间 | 否 |
+| 说明 | 分步烹饪指导 | 是 |
+| 关键词 | 分类标签 | 否 |
+| 来源 | 原始食谱 URL 或书籍 | 否 |
 
-- [Chowdown](https://github.com/clarklab/chowdown) - Markdown 格式的简单食谱。
-- [Domingo Fermenter Software](https://github.com/domingoclub/fermenter-software) - 用于控制食品发酵过程（曲、豆豉）的软件。
-- [Food Recipe CNN](https://github.com/Murgio/Food-Recipe-CNN) - DeepChef：利用机器学习对烹饪菜肴进行分类。
-- [foodprocessor](https://github.com/pearofducks/foodprocessor) - 用于显示食谱的react/mobx javascript应用程序。
-- [Grocy](https://github.com/grocy/grocy) - 具有食谱和膳食计划功能的自托管杂货和家庭管理解决方案。
-- [is-vegan](https://github.com/hmontazeri/is-vegan) - 帮助识别素食和非素食食品成分的工具。
-- [Mealie](https://github.com/mealie-recipes/mealie) - 自托管食谱管理器和膳食计划器，具有 RestAPI 后端和反应式前端。
-- [Mealient](https://github.com/kirmanak/Mealient) - Mealie 自托管菜谱管理器的 Android 客户端。
-- [MEWPlanner](https://github.com/eleow/IRS-MR-2019-07-01-IS1FT-GRP-MEWPlanner) - 一款专注于糖尿病友好膳食的智能膳食计划器（NUS-ISS 项目）。
-- [meanrecipe](https://github.com/schollz/meanrecipe) - 获取下一顿饭的共识食谱。
-- [Nextcloud Cookbook](https://github.com/nextcloud/cookbook) - Nextcloud 的食谱管理应用程序。
-- [RasPiBrew](https://github.com/steve71/RasPiBrew) - 用于家庭酿造和真空低温烹调的 Raspberry Pi 温度控制器。
-- [Recipe Hero](https://github.com/bryceadams/Recipe-Hero) - 一个免费的食谱插件，可以让食物味道更好。
-- [RecipeParser](https://github.com/Brooke-white/RecipeParser) - 将在线食谱转换为 Markdown 格式的工具。
-- [Recipya](https://github.com/reaper47/recipya) - 一个干净、简单且功能强大的自托管食谱管理器。
-- [recipebook](https://github.com/dpapathanasiou/recipebook) - 这是一个简单的应用程序，用于抓取和解析在网络上以 hRecipe 格式找到的食物食谱数据，并生成 json 格式的结果。
-- [Tandoor Recipes](https://github.com/TandoorRecipes/recipes) - 用于管理食谱、计划膳食、建立购物清单等的应用程序。
+### 添加食材
 
-## 开发者资源
+| 字段 | 描述 | 示例 |
+|-------|-------------|---------|
+| 食材 | 食材名称 | 中筋面粉 |
+| 用量 | 所需数量 | 2 |
+| 单位 | 计量单位 | 杯 |
+| 备注 | 附加说明 | 过筛 |
 
-- [Cook-It Android XML 模板](https://github.com/dytlabs/Cook-It-Android-XML-Template) - 用于烹饪/食谱应用程序的 Android XML 布局。
-- [Flutter Recipe App Template (hungry)](https://github.com/mrezkys/hungry) - 使用 Flutter 构建菜谱应用程序的入门模板。
-- [React Native 食谱应用程序模板](https://github.com/dopebase/react-native-recipes-app) - React Native 中的食谱应用程序的入门模板。
+### 步骤说明
 
-＃＃ 贡献
+食谱中的每个步骤可包含：
 
-欢迎投稿！首先阅读[贡献指南](contributing.md)。
+| 字段 | 描述 |
+|-------|-------------|
+| 说明 | 烹饪指导文本 |
+| 时间 | 该步骤的时长（分钟） |
+| 图片 | 该步骤的照片 |
+| 温度 | 适用的烹饪温度 |
 
-## 关键资源
+### 食谱导入
 
-|资源 |链接 |
-|----------|------|
-|食谱| [https://github.com/panozzaj/recipes](https://github.com/panozzaj/recipes) |
-|食物食谱| [https://github.com/obfuscurity/food-recipes](https://github.com/obfuscurity/food-recipes) |
-|食谱| [https://github.com/dolph/recipes](https://github.com/dolph/recipes) |
-|重新编译器 | [https://github.com/kmcconnell/recipyzer](https://github.com/kmcconnell/recipyzer) |
-| 1337 Noms 黑客食谱 | 1337 Noms [https://github.com/DEAD10C5/1337-Noms-The-Hacker-Cookbook](https://github.com/DEAD10C5/1337-Noms-The-Hacker-Cookbook) |
-|阿姨食谱| [https://github.com/user24/auntiesrecipes](https://github.com/user24/auntiesrecipes) |
-| Anduin2017/HowToCook | [https://github.com/Anduin2017/HowToCook](https://github.com/Anduin2017/HowToCook) |
-|面包代码| [https://github.com/hendricius/the-bread-code](https://github.com/hendricius/the-bread-code) |
-|烹饪食谱| [https://github.com/usmanayubsh/cooking-recipes](https://github.com/usmanayubsh/cooking-recipes) |
-|康萨松 | [https://github.com/AshtarCodes/Con-Sazon](https://github.com/AshtarCodes/Con-Sazon) |
-|美味烹饪 | [https://github.com/douvy/tasty-cooking](https://github.com/douvy/tasty-cooking) |
-|云友君/厨师 | [https://github.com/YunYouJun/cook](https://github.com/YunYouJun/cook) |
-| El Fuego Viviente 食谱 | [https://github.com/aweijnitz/recipe-el_fuego_viviente](https://github.com/aweijnitz/recipe-el_fuego_viviente) |
-|披萨面团| [https://github.com/hendricius/pizza-dough](https://github.com/hendricius/pizza-dough) |
-|玉米饼幻想 | [https://github.com/sinker/tacofancy](https://github.com/sinker/tacofancy) |
-|性感炸鸡排 | [https://gist.github.com/buggymcbugfix/602f34214a37d972993830c2c9526cf0](https://gist.github.com/buggymcbugfix/602f34214a37d972993830c2c9526cf0) |
-|酵母框架 | [https://github.com/hendricius/the-sourdough-framework](https://github.com/hendricius/the-sourdough-framework) |
-|开源百吉饼 | [https://github.com/andrewkern/bagels](https://github.com/andrewkern/bagels) |
-|开源面团压片机 | [https://github.com/frenchguycooking/doughsheeter](https://github.com/frenchguycooking/doughsheeter) |
-|酒吧助理| [https://github.com/karlomikus/bar-assistant](https://github.com/karlomikus/bar-assistant) |
-|鸡尾酒浆果 | [https://github.com/AndreWohnsland/CocktailBerry](https://github.com/AndreWohnsland/CocktailBerry) |
-|开饮 | [https://github.com/alfg/opendrinks](https://github.com/alfg/opendrinks) |
-|畅饮| [https://github.com/clarklab/chowdown](https://github.com/clarklab/chowdown) |
-|多明戈发酵机软件 | [https://github.com/domingoclub/fermenter-software](https://github.com/domingoclub/fermenter-software) |
+| 方式 | 描述 |
+|--------|-------------|
+| URL 导入 | 粘贴食谱 URL 自动导入 |
+| 文本导入 | 复制粘贴食谱文本 |
+| 文件导入 | 从支持的文件格式导入 |
+| 手动输入 | 手动填写所有字段 |
 
+## 食材数据库
+
+### 营养信息
+
+| 营养素 | 单位 | 描述 |
+|----------|------|-------------|
+| 卡路里 | kcal | 能量含量 |
+| 蛋白质 | 克 | 蛋白质含量 |
+| 碳水化合物 | 克 | 碳水化合物含量 |
+| 脂肪 | 克 | 脂肪含量 |
+| 纤维 | 克 | 膳食纤维 |
+| 钠 | 毫克 | 钠含量 |
+
+### 食材分类
+
+| 分类 | 示例 |
+|----------|---------|
+| 蔬菜 | 番茄、洋葱、大蒜、胡萝卜 |
+| 水果 | 苹果、香蕉、柠檬、橙子 |
+| 蛋白质 | 鸡胸肉、牛肉、豆腐、鸡蛋 |
+| 乳制品 | 牛奶、奶酪、黄油、酸奶 |
+| 谷物 | 大米、意面、面包、面粉 |
+| 调料 | 盐、胡椒、孜然、辣椒粉 |
+| 油脂 | 橄榄油、植物油、黄油 |
+
+## 膳食计划
+
+### 创建膳食计划
+
+| 步骤 | 操作 |
+|------|--------|
+| 1 | 导航到膳食计划部分 |
+| 2 | 选择日期范围 |
+| 3 | 将食谱添加到特定日期和餐次 |
+| 4 | 如需要调整份数 |
+| 5 | 保存膳食计划 |
+
+### 餐次类型
+
+| 类型 | 描述 |
+|------|-------------|
+| 早餐 | 早晨用餐 |
+| 午餐 | 中午用餐 |
+| 晚餐 | 晚间用餐 |
+| 加餐 | 正餐之间 |
+
+### 膳食计划视图
+
+| 视图 | 描述 |
+|------|-------------|
+| 日历 | 计划膳食的月度概览 |
+| 列表 | 即将到来膳食的线性列表 |
+| 日视图 | 单日的详细视图 |
+
+## 购物清单
+
+### 自动生成
+
+| 步骤 | 描述 |
+|------|-------------|
+| 1 | 选择膳食计划或食谱集合 |
+| 2 | 点击生成购物清单 |
+| 3 | 系统汇总所有食材 |
+| 4 | 重复项目被合并 |
+| 5 | 审阅并编辑清单 |
+
+### 购物清单功能
+
+| 功能 | 描述 |
+|---------|-------------|
+| 分类 | 按商店区域分组的项目 |
+| 复选框 | 标记已购项目 |
+| 手动项目 | 添加非食谱项目 |
+| 分享 | 与家庭成员分享清单 |
+| 导出 | 导出为 PDF 或文本格式 |
+
+### 购物分类
+
+| 分类 | 项目 |
+|----------|-------|
+| 生鲜 | 水果和蔬菜 |
+| 肉类 | 肉和家禽 |
+| 乳制品 | 牛奶、奶酪、鸡蛋 |
+| 烘焙 | 面包和烘焙食品 |
+| 干货 | 罐头、干料 |
+| 冷冻 | 冷冻食品 |
+| 饮料 | 饮品和果汁 |
+
+## 关键词系统
+
+### 关键词分类
+
+| 分类 | 示例关键词 |
+|----------|-----------------|
+| 菜系 | 意大利、墨西哥、亚洲、地中海 |
+| 饮食 | 素食、纯素、无麸质、生酮 |
+| 菜式 | 开胃菜、主菜、甜点、配菜 |
+| 难度 | 简单、中等、高级 |
+| 方法 | 烘烤、烧烤、慢炖锅、Instant Pot |
+
+## 导入和导出
+
+### 支持的导入来源
+
+| 来源 | 方式 |
+|--------|--------|
+| 食谱网站 | 使用 schema.org 解析的 URL 抓取 |
+| Paprika | 从 Paprika 格式导入 |
+| Mealie | 从 Mealie 导出导入 |
+| CopyMeThat | 从 CopyMeThat 导出导入 |
+| 文本文件 | 解析结构化文本食谱 |
+
+### 导出选项
+
+| 格式 | 描述 |
+|--------|-------------|
+| JSON | 机器可读的食谱数据 |
+| PDF | 可打印的食谱格式 |
+| Markdown | 基于文本的食谱格式 |
+
+## API 访问
+
+### 关键端点
+
+| 端点 | 方法 | 描述 |
+|----------|--------|-------------|
+| `/api/recipe/` | GET | 列出所有食谱 |
+| `/api/recipe/{id}/` | GET | 获取特定食谱 |
+| `/api/food/` | GET | 列出食材数据库 |
+| `/api/meal-plan/` | GET | 列出膳食计划 |
+| `/api/shopping-list/` | GET | 获取购物清单 |
+| `/api/keyword/` | GET | 列出关键词 |
+
+### API 认证
+
+```bash
+# 使用 session 认证或 token
+curl -H "Authorization: Token your_api_token" \
+  http://localhost:8080/api/recipe/
+```
+
+## 多用户功能
+
+### 用户角色
+
+| 角色 | 权限 |
+|------|-------------|
+| 管理员 | 完全系统访问和配置 |
+| 用户 | 创建和编辑自己的食谱 |
+| 访客 | 只读访问共享食谱 |
+
+### 分享
+
+| 分享类型 | 描述 |
+|-----------|-------------|
+| 公开链接 | 为任何食谱生成可分享的 URL |
+| 用户分享 | 与特定注册用户分享 |
+| 空间 | 将食谱组织到共享空间 |
+
+## 总结
+
+| 主题 | 核心要点 |
+|-------|-------------|
+| 用途 | 带膳食计划的自托管食谱管理 |
+| 食谱 | 带营养计算的详细食材列表 |
+| 计划 | 基于日历的膳食计划，带购物清单生成 |
+| 导入 | 从网站和其他格式自动导入食谱 |
+| 多用户 | 共享空间和食谱协作 |
+| API | 用于集成和自动化的 RESTful API |

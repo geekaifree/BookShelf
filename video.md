@@ -1,429 +1,601 @@
-# CS 视频课程：完整集合
+# 使用 Kdenlive 进行视频编辑
 
-按学科组织的计算机科学视频课程综合目录。这些来自顶级大学的免费视频讲座让你按自己的节奏学习 CS。
+使用 Kdenlive 开源非线性视频编辑器的实用指南。
 
 ## 目录
 
-- [CS 入门](#cs-入门)
-- [算法](#算法)
-- [人工智能](#人工智能)
-- [机器学习](#机器学习)
-- [深度学习](#深度学习)
-- [自然语言处理](#自然语言处理)
-- [计算机视觉](#计算机视觉)
-- [机器人学](#机器人学)
-- [数据库](#数据库)
-- [网络](#网络)
-- [安全](#安全)
-- [数学](#数学)
-- [CS 物理](#cs-物理)
+- [安装](#安装)
+- [界面概览](#界面概览)
+- [项目设置](#项目设置)
+- [时间线编辑](#时间线编辑)
+- [转场](#转场)
+- [效果](#效果)
+- [颜色校正](#颜色校正)
+- [音频编辑](#音频编辑)
+- [关键帧](#关键帧)
+- [字幕](#字幕)
+- [代理编辑](#代理编辑)
+- [渲染和导出](#渲染和导出)
+- [键盘快捷键](#键盘快捷键)
 
 ---
 
-## CS 入门
+## 安装
 
-这些课程为初学者提供计算机科学基础。
+### Linux
 
-| 课程 | 讲师 | 大学 | 涵盖主题 |
-|--------|-----------|------------|----------------|
-| CS50 | David Malan | Harvard | C、Python、SQL、Web 开发 |
-| 6.0001 | Ana Bell、Eric Grimson | MIT | Python、计算思维 |
-| 6.001 | Abelson、Sussman | MIT | Scheme、SICP |
-| CS 61A | John DeNero | UC Berkeley | Python、Scheme、SQL |
-| 15-112 | David Kosbie | CMU | Python、基础 |
-| CS 106A | Mehran Sahami | Stanford | Java、编程基础 |
-| CS 106B | Jerry Cain | Stanford | C++、数据结构 |
-| Introduction to CS | Nick Parlante | Stanford (Udacity) | Python |
+| 发行版 | 命令 |
+|--------|------|
+| Ubuntu/Debian | `sudo apt install kdenlive` |
+| Fedora | `sudo dnf install kdenlive` |
+| Arch Linux | `sudo pacman -S kdenlive` |
+| Flatpak（通用） | `flatpak install org.kde.kdenlive` |
+| Snap | `sudo snap install kdenlive` |
 
-### 课程内容
+### macOS
 
-| 组件 | 描述 |
-|-----------|-------------|
-| 讲座 | 实际课堂的视频录制 |
-| 作业 | 带规格说明的编程练习 |
-| 考试 | 来自真实考试的练习题 |
-| 阅读 | 教科书章节或在线笔记 |
+通过 Homebrew 安装：
 
----
+```bash
+brew install --cask kdenlive
+```
 
-## 算法
+或从 Kdenlive 官方网站下载 `.dmg` 文件。
 
-通过这些视频课程学习设计和分析高效算法。
+### Windows
 
-| 课程 | 讲师 | 大学 | 难度 |
-|--------|-----------|------------|------------|
-| 6.006 | Erik Demaine、Srini Devadas | MIT | 中级 |
-| 6.046 | Erik Demaine | MIT | 高级 |
-| Algorithms Specialization | Tim Roughgarden | Stanford (Coursera) | 中级 |
-| CS 161 | Mary Wootters、Moses Charikar | Stanford | 中级 |
-| CS 170 | Satish Rao、Luca Trevisan | UC Berkeley | 中级 |
-| Algorithms, Part I | Kevin Wayne、Robert Sedgewick | Princeton (Coursera) | 中级 |
-| Algorithms, Part II | Kevin Wayne、Robert Sedgewick | Princeton (Coursera) | 高级 |
-| 15-451 | Anupam Gupta、Danny Sleator | CMU | 高级 |
+1. 从 https://kdenlive.org/download/ 下载安装程序。
+2. 运行 `.exe` 安装程序。
+3. 按照安装向导操作。
+4. Kdenlive 将自动安装所需组件（FFmpeg、MLT）。
 
-### 算法主题
+### 验证安装
 
-| 主题 | 视频资源 |
-|-------|----------------|
-| 排序 | 6.006 讲座 1-4 |
-| 图算法 | 6.006 讲座 13-18 |
-| 动态规划 | 6.006 讲座 19-22、6.046 讲座 10-12 |
-| 贪心算法 | 6.046 讲座 7-9 |
-| 分治法 | 6.046 讲座 1-3 |
-| 均摊分析 | 6.046 讲座 13 |
-| 网络流 | 6.046 讲座 16-17 |
-| 线性规划 | 6.046 讲座 14-15 |
+启动 Kdenlive 后，检查 `Help > About Kdenlive` 确认版本。确保在 `Settings > Configure Kdenlive > Environment` 中检测到 FFmpeg。
 
 ---
 
-## 人工智能
+## 界面概览
 
-AI 课程涵盖搜索、逻辑、规划和不确定性下的决策。
+Kdenlive 界面由可配置的面板组成。
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 221 | Percy Liang、Dorsa Sadigh | Stanford | 综合 AI |
-| CS 50 AI | David Malan | Harvard | Python 实践 AI |
-| 6.034 | Patrick Winston | MIT | 经典 AI |
-| CS 188 | Dan Klein、Pieter Abbeel | UC Berkeley | 搜索、规划、MDP |
-| CS 4700 | Bart Selman | Cornell | AI 基础 |
-| CS 6601 | Charles Isbell | Georgia Tech | AI 概述 |
+### 主要面板
 
-### AI 主题概览
+| 面板 | 位置 | 用途 |
+|------|------|------|
+| Project Bin | 左上 | 导入和组织媒体素材 |
+| Clip Monitor | 中上 | 预览源片段 |
+| Project Monitor | 中上 | 预览编辑后的时间线 |
+| Timeline | 底部 | 在轨道上排列片段 |
+| Effects/Properties | 右侧栏 | 应用和配置效果 |
+| Audio Mixer | 右下 | 控制每轨道音频电平 |
 
-| 主题 | 关键概念 | 推荐视频 |
-|-------|-------------|-------------------|
-| 搜索 | BFS、DFS、A*、minimax | CS 188 讲座 1-4 |
-| 逻辑 | 命题逻辑、一阶逻辑 | 6.034 讲座 7-10 |
-| 规划 | STRIPS、偏序 | CS 221 讲座 9-11 |
-| 概率推理 | 贝叶斯网络、HMM | CS 188 讲座 9-14 |
-| 机器学习 | 感知机、SVM | CS 221 讲座 12-18 |
-| 马尔可夫决策过程 | 值迭代、策略迭代 | CS 188 讲座 5-8 |
-| 博弈论 | 纳什均衡、策略 | CS 221 讲座 19-20 |
+### 工作空间布局
 
----
+Kdenlive 提供多种预设工作空间：
 
-## 机器学习
+| 工作空间 | 最适合 |
+|----------|--------|
+| Default | 通用编辑 |
+| Audio | 音频为主编辑 |
+| Effects | 应用和调整效果 |
+| Logging | 导入和组织素材 |
+| Editing | 完整编辑工作流 |
 
-机器学习课程教授从数据中学习的算法。
+通过 `View > Workspace` 切换工作空间。
 
-| 课程 | 讲师 | 大学 | 平台 |
-|--------|-----------|------------|----------|
-| CS 229 | Andrew Ng | Stanford | YouTube |
-| CS 229 | Andrew Ng | Stanford | Coursera |
-| Machine Learning Specialization | Andrew Ng | Stanford | Coursera |
-| 6.036 | Tommi Jaakkola、Leslie Kaelbling | MIT | OCW |
-| CS 189 | Jonathan Shewchuk | UC Berkeley | YouTube |
-| Learning from Data | Yaser Abu-Mostafa | Caltech | YouTube |
-| Statistical Learning | Hastie、Tibshirani | Stanford | edX |
-| CS 155 | Yisong Yue | Caltech | YouTube |
+### 自定义界面
 
-### ML 算法对比
-
-| 算法 | 类型 | 用例 | 复杂度 |
-|-----------|------|----------|------------|
-| 线性回归 | 监督 | 连续预测 | O(n*d^2) |
-| 逻辑回归 | 监督 | 二分类 | O(n*d) |
-| 决策树 | 监督 | 分类/回归 | O(n*d*log n) |
-| 随机森林 | 监督 | 集成分类 | O(k*n*d*log n) |
-| SVM | 监督 | 间隔分类 | O(n^2*d) |
-| K-Means | 无监督 | 聚类 | O(n*k*i) |
-| PCA | 无监督 | 降维 | O(n*d^2) |
-| KNN | 监督 | 基于实例的学习 | O(n*d) |
-| 朴素贝叶斯 | 监督 | 文本分类 | O(n*d) |
+- **重新排列面板** - 拖动面板标签。
+- **取消停靠面板** - 拖动到主窗口外。
+- **保存布局** - 通过 `View > Save Current Layout`。
+- **重置布局** - 通过 `View > Workspace > Default`。
 
 ---
 
-## 深度学习
+## 项目设置
 
-深度学习已经彻底改变了 AI。这些课程涵盖神经网络架构和训练。
+### 创建新项目
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 231n | Fei-Fei Li 等 | Stanford | 计算机视觉 |
-| CS 224n | Christopher Manning | Stanford | NLP |
-| 6.S191 | Alexander Amini、Ava Soleimany | MIT | 入门 |
-| Deep Learning Specialization | Andrew Ng | deeplearning.ai | 综合 |
-| CS 285 | Sergey Levine | UC Berkeley | 强化学习 |
-| CS 236 | Stefano Ermon | Stanford | 生成模型 |
-| NYU Deep Learning | Yann LeCun、Alfredo Canziani | NYU | 理论 |
+1. 前往 `Project > New`。
+2. 输入项目名称。
+3. 选择项目文件夹。
+4. 选择项目配置文件（分辨率和帧率）。
 
-### 神经网络架构
+### 项目配置文件
 
-| 架构 | 年份 | 最适合 | 关键创新 |
-|-------------|------|----------|----------------|
-| MLP | 1980s | 表格数据 | 反向传播 |
-| CNN | 1990s | 图像、空间数据 | 卷积层 |
-| RNN | 1990s | 序列 | 循环 |
-| LSTM | 1997 | 长序列 | 门控机制 |
-| Transformer | 2017 | NLP、一切 | 自注意力 |
-| GAN | 2014 | 图像生成 | 对抗训练 |
-| Diffusion | 2020 | 图像生成 | 迭代去噪 |
-| Vision Transformer | 2020 | 图像 | 块上的注意力 |
+| 配置文件 | 分辨率 | 帧率 | 使用场景 |
+|----------|--------|------|----------|
+| HD 1080p | 1920x1080 | 30fps | 标准网络视频 |
+| HD 1080p | 1920x1080 | 24fps | 电影感 |
+| 4K UHD | 3840x2160 | 30fps | 高分辨率项目 |
+| 720p | 1280x720 | 30fps | 轻量项目 |
+| Vertical 9:16 | 1080x1920 | 30fps | 移动/社交媒体 |
 
-### 深度学习框架
+### 自动配置文件检测
 
-| 框架 | 创建者 | 语言 | 最适合 |
-|-----------|---------|----------|----------|
-| PyTorch | Meta | Python | 研究、灵活性 |
-| TensorFlow | Google | Python | 生产部署 |
-| JAX | Google | Python | 高性能研究 |
-| Keras | Google | Python | 易用性 |
-| Hugging Face | 社区 | Python | 预训练模型 |
+导入第一个片段时，Kdenlive 可以自动匹配项目配置文件与片段属性。在 `Settings > Configure Kdenlive > Project Defaults` 中启用。
+
+### 项目设置
+
+| 设置 | 位置 | 描述 |
+|------|------|------|
+| Default duration | Project > Project Settings | 图片段的持续时间 |
+| Audio channels | Project > Project Settings | 立体声或单声道 |
+| Timeline frames | Project > Project Settings | 每秒帧数 |
+| Proxy settings | Project > Project Settings | 启用代理片段 |
 
 ---
 
-## 自然语言处理
+## 时间线编辑
 
-NLP 课程教授计算机如何理解和生成人类语言。
+时间线是您排列和编辑视频项目的地方。
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 224n | Christopher Manning | Stanford | 深度 NLP |
-| CS 224u | Bill MacCartney | Stanford | 计算语义 |
-| CS 124 | Dan Jurafsky、Chris Manning | Stanford | NLP 基础 |
-| 6.864 | Regina Barzilay | MIT | 高级 NLP |
-| CMU CS 11-747 | Graham Neubig | CMU | 神经 NLP |
+### 将片段添加到时间线
 
-### NLP 主题进阶
+| 方法 | 操作 |
+|------|------|
+| Drag and drop | 从 Project Bin 拖到时间线 |
+| Insert | 选择片段，按 `V` 在播放头插入 |
+| Overwrite | 选择片段，按 `B` 在播放头覆盖 |
+| Three-point edit | 在片段和时间线上设置入/出点，然后插入 |
 
-| 级别 | 主题 | 推荐课程 |
-|-------|--------|-------------------|
-| 初学者 | 文本处理、分词、n-gram | CS 124 |
-| 中级 | 词向量、RNN、注意力 | CS 224n 上半部分 |
-| 高级 | Transformer、BERT、GPT | CS 224n 下半部分 |
-| 研究 | 提示、RLHF、对齐 | 论文和研讨会 |
+### 时间线轨道
 
-### 关键 NLP 模型
+| 轨道类型 | 用途 |
+|----------|------|
+| Video track | 持有视频片段、图片、字幕 |
+| Audio track | 持有音频片段、旁白 |
+| Transition track | 持有片段间的转场 |
 
-| 模型 | 年份 | 架构 | 影响 |
-|-------|------|-------------|--------|
-| Word2Vec | 2013 | 浅层 NN | 词嵌入 |
-| GloVe | 2014 | 矩阵分解 | 全局词向量 |
-| Seq2Seq | 2014 | 编码器-解码器 | 机器翻译 |
-| Attention | 2015 | 注意力机制 | 更好的对齐 |
-| BERT | 2018 | Transformer 编码器 | 迁移学习 |
-| GPT-2/3/4 | 2019-2023 | Transformer 解码器 | 语言生成 |
-| T5 | 2019 | 编码器-解码器 | 文本到文本统一 |
+- **添加轨道** - 右键点击轨道头 > Insert Track。
+- **删除轨道** - 右键点击轨道头 > Delete Track。
+- **重排轨道** - 拖动轨道头。
+- **锁定轨道** - 点击轨道头的锁定图标。
 
----
+### 基本编辑操作
 
-## 计算机视觉
+| 操作 | 快捷键 | 描述 |
+|------|--------|------|
+| Cut/razor | `Shift + R` | 在播放头分割片段 |
+| Select | `Shift + S` | 选择模式 |
+| Spacer | `Shift + M` | 移动某点之后的所有片段 |
+| Delete | `Delete` | 删除选定片段 |
+| Ripple delete | `Shift + Delete` | 删除片段并关闭间隙 |
+| Copy | `Ctrl + C` | 复制选定片段 |
+| Paste | `Ctrl + V` | 在播放头粘贴 |
+| Undo | `Ctrl + Z` | 撤销上一操作 |
+| Redo | `Ctrl + Shift + Z` | 重做上一撤销操作 |
 
-学习计算机如何解释和理解视觉信息。
+### 修剪片段
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 231n | Fei-Fei Li 等 | Stanford | CNN 视觉 |
-| CS 231a | Silvio Savarese | Stanford | 3D 视觉 |
-| CS 4476 | James Hays | Georgia Tech | CV 入门 |
-| 6.819 | Antonio Torralba | MIT | CV 前沿 |
-| CS 280 | Ren Ng | UC Berkeley | 计算机视觉 |
-| ECE 498 | Derek Hoiem | UIUC | 视觉识别 |
+| 修剪类型 | 操作 | 结果 |
+|----------|------|------|
+| Ripple trim | 拖动片段边缘 | 调整片段，移动后续片段 |
+| Roll trim | 拖动两个片段间的编辑点 | 同时调整两个片段 |
+| Slip | 拖动片段中间 | 更改入/出点，保持位置 |
+| Slide | 用 Ctrl 拖动片段 | 移动片段不影响其他 |
 
-### 计算机视觉主题
+### 时间线导航
 
-| 主题 | 描述 | 关键方法 |
-|-------|-------------|-------------|
-| 图像分类 | 识别图像中的内容 | CNN、ViT |
-| 目标检测 | 用边界框定位物体 | YOLO、Faster R-CNN |
-| 语义分割 | 对每个像素分类 | U-Net、DeepLab |
-| 实例分割 | 分离单个物体 | Mask R-CNN |
-| 姿态估计 | 检测身体/关键点位置 | OpenPose |
-| 光流 | 跟踪帧间运动 | RAFT |
-| 深度估计 | 从图像估计 3D 深度 | MiDaS |
-| 图像生成 | 创建新图像 | GAN、扩散模型 |
-
----
-
-## 机器人学
-
-机器人学结合了 AI、控制理论和机械工程。
-
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 237A | Pieter Abbeel | UC Berkeley | 机器人动力学 |
-| 6.800 | Russ Tedrake | MIT | 机器人操作 |
-| CS 225A | Oussama Khatib | Stanford | 机器人控制 |
-| 16-385 | Matthew Johnson-Roberson | CMU | 机器人计算机视觉 |
-| CS 326 | Scott Niekum | UMass | 机器人学习 |
-| ME 206A | S. Shankar Sastry | UC Berkeley | 机器人入门 |
-
-### 机器人学主题
-
-| 主题 | 描述 |
-|-------|-------------|
-| 运动学 | 机器人运动和关节配置 |
-| 动力学 | 力、扭矩和运动方程 |
-| 控制 | PID、最优控制、反馈循环 |
-| 感知 | 传感器、SLAM、物体识别 |
-| 规划 | 路径规划、运动规划 |
-| 操作 | 抓取、物体操作 |
-| 学习 | 机器人 RL、模仿学习 |
+| 操作 | 快捷键 |
+|------|--------|
+| Play/Pause | `Space` |
+| Go to start | `Home` |
+| Go to end | `End` |
+| Step forward one frame | `Right` |
+| Step backward one frame | `Left` |
+| Step forward 1 second | `Shift + Right` |
+| Zoom in timeline | `Ctrl +` |
+| Zoom out timeline | `Ctrl -` |
 
 ---
 
-## 数据库
+## 转场
 
-数据库设计、实现和优化的视频课程。
+转场在片段之间创建平滑的视觉变化。
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CMU 15-445 | Andy Pavlo | CMU | 数据库系统 |
-| CMU 15-721 | Andy Pavlo | CMU | 高级数据库 |
-| CS 186 | Joseph Hellerstein | UC Berkeley | 数据库系统 |
-| Database Systems | Jennifer Widom | Stanford | 数据库入门 |
-| 6.830 | Samuel Madden、Mike Stonebraker | MIT | 数据库系统 |
+### 添加转场
 
-### 数据库课程主题
+1. 将两个片段放在同一轨道上使其重叠，或放在相邻轨道上。
+2. 右键点击重叠区域。
+3. 选择 `Insert Transition`。
+4. 选择转场类型。
 
-| 主题 | CMU 15-445 | CS 186 | Stanford |
-|-------|-----------|--------|----------|
-| SQL | 是 | 是 | 是 |
-| 关系模型 | 是 | 是 | 是 |
-| 存储引擎 | 是 | 是 | 否 |
-| 缓冲管理 | 是 | 是 | 否 |
-| 索引 (B-tree) | 是 | 是 | 是 |
-| 查询处理 | 是 | 是 | 是 |
-| 事务处理 | 是 | 是 | 是 |
-| 并发控制 | 是 | 是 | 是 |
-| 恢复 | 是 | 是 | 是 |
-| 分布式数据库 | 否 | 是 | 否 |
+### 转场类型
 
----
+| 转场 | 视觉效果 | 持续时间 |
+|------|----------|----------|
+| Dissolve | 片段间渐变 | 0.5 - 2 秒 |
+| Wipe Left | 新片段从右侧滑入 | 可配置 |
+| Wipe Right | 新片段从左侧滑入 | 可配置 |
+| Wipe Up | 新片段从底部滑入 | 可配置 |
+| Dissolve to Black | 淡出后淡入 | 0.5 - 1 秒 |
 
-## 网络
+### 转场属性
 
-理解数据如何在互联网上传输。
+| 属性 | 描述 |
+|------|------|
+| Duration | 转场长度 |
+| Direction | 正向或反向 |
+| Alignment | 重叠的起始、中心或结束 |
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 144 | Philip Levis、Nick McKeown | Stanford | 计算机网络 |
-| 6.829 | Hari Balakrishnan 等 | MIT | 高级网络 |
-| Computer Networks | Richard Buckland | UNSW | 网络基础 |
-| CS 6251 | Mostafa Ammar | Georgia Tech | 计算机网络 |
-| Internet History | 各种 | 各种 | 互联网如何构建 |
+### 自动转场
 
-### 网络层级
-
-| 层级 | 协议示例 | 视频讲座 |
-|-------|------------------|----------------|
-| 应用层 | HTTP、DNS、SMTP | CS 144 讲座 1-5 |
-| 传输层 | TCP、UDP、QUIC | CS 144 讲座 6-10 |
-| 网络层 | IP、BGP、OSPF | CS 144 讲座 11-14 |
-| 链路层 | Ethernet、WiFi | CS 144 讲座 15-17 |
-| 物理层 | 光纤、铜缆 | CS 144 讲座 18 |
+在 `Settings > Configure Kdenlive > Timeline` 中启用自动转场。启用后，重叠的片段自动获得溶解转场。
 
 ---
 
-## 安全
+## 效果
 
-学习构建安全系统和理解攻击向量。
+效果修改片段的外观或属性。
 
-| 课程 | 讲师 | 大学 | 重点 |
-|--------|-----------|------------|-------|
-| CS 161 | Vern Paxson、David Wagner | UC Berkeley | 计算机安全 |
-| 6.858 | Nickolai Zeldovich | MIT | 系统安全 |
-| CS 253 | Feross Aboukhadijeh | Stanford | Web 安全 |
-| Introduction to Cyber Security | 各种 | Coursera | 网络安全基础 |
-| Security Engineering | Ross Anderson | Cambridge | 安全设计 |
-| CS 155 | Dan Boneh | Stanford | 网络安全 |
+### 应用效果
 
-### 安全主题
+1. 在时间线上选择片段。
+2. 打开 Effects 面板（右侧栏）。
+3. 浏览或搜索效果。
+4. 双击或将效果拖到片段上。
+5. 在效果属性中调整参数。
 
-| 主题 | 学习内容 | 威胁 |
-|-------|---------------|---------|
-| 内存安全 | 缓冲区溢出、栈保护 | 代码注入 |
-| Web 安全 | XSS、CSRF、SQL 注入 | Web 攻击 |
-| 密码学 | 加密、密钥交换、哈希 | 数据泄露 |
-| 网络安全 | 防火墙、TLS、VPN | 中间人攻击 |
-| 认证 | 密码、令牌、生物识别 | 身份盗用 |
-| 操作系统安全 | 沙盒、能力 | 权限提升 |
-| 移动安全 | 应用沙盒、权限 | 恶意软件 |
+### 视频效果分类
 
----
+| 分类 | 示例 |
+|------|------|
+| Transform | Position, Scale, Crop, Rotate |
+| Color | Brightness, Contrast, Saturation, White Balance |
+| Blur | Gaussian Blur, Box Blur, Average Blur |
+| Distort | Fish Eye, Mirror, Wave |
+| Keying | Chroma Key（绿幕）, Luma Key |
+| Stylize | Cartoon, Charcoal, Glow |
 
-## 数学
+### 音频效果分类
 
-理解 CS 理论必备的数学课程。
+| 分类 | 示例 |
+|------|------|
+| Volume | Gain, Normalize, Compressor |
+| EQ | Equalizer, Band Pass |
+| Dynamics | Noise Gate, Limiter, Expander |
+| Delay | Echo, Reverb |
+| Filters | Noise Reduction, High Pass, Low Pass |
 
-| 课程 | 讲师 | 大学 | 主题 |
-|--------|-----------|------------|-------|
-| 18.01 | Dennis Auroux | MIT | 单变量微积分 |
-| 18.02 | Denis Auroux | MIT | 多变量微积分 |
-| 18.06 | Gilbert Strang | MIT | 线性代数 |
-| 6.042 | Tom Leighton、Marten van Dijk | MIT | CS 数学 |
-| CS 70 | Satish Rao、Babak Ayazifar | UC Berkeley | 离散数学和概率 |
-| Math 55 | 各种 | Harvard | 密集数学 |
-| 18.05 | Jeremy Orloff | MIT | 概率和统计 |
-| 6.041 | John Tsitsiklis | MIT | 概率系统 |
-| 18.100 | 各种 | MIT | 实分析 |
+### 效果堆栈
 
-### CS 数学主题
+多个效果可以应用到单个片段。它们按从上到下的顺序处理。
 
-| 主题 | 重要性 | 最佳视频课程 |
-|-------|----------------|-------------------|
-| 线性代数 | ML、图形学、优化 | 18.06 (Gilbert Strang) |
-| 微积分 | 优化、连续模型 | 18.01、18.02 |
-| 概率论 | 随机算法、ML | 6.041 |
-| 离散数学 | 逻辑、证明、组合 | 6.042 |
-| 数论 | 密码学 | CS 70 |
-| 图论 | 算法、网络 | 6.042 |
-| 统计 | 数据分析、ML | 18.05 |
-| 优化 | ML 训练、运筹学 | 6.252 |
+| 操作 | 方法 |
+|------|------|
+| Reorder effects | 在堆栈中拖动效果 |
+| Disable effect | 切换眼睛图标 |
+| Remove effect | 选择并点击减号按钮 |
+| Copy effects | 右键 > Copy Effects |
+| Paste effects | 右键另一片段 > Paste Effects |
 
 ---
 
-## CS 物理
+## 颜色校正
 
-对模拟、图形学和理解硬件有用的物理概念。
+Kdenlive 提供调整和校正素材颜色的工具。
 
-| 课程 | 讲师 | 大学 | 主题 |
-|--------|-----------|------------|--------|
-| 8.01 | Walter Lewin | MIT | 经典力学 |
-| 8.02 | Walter Lewin | MIT | 电磁学 |
-| 8.03 | Walter Lewin | MIT | 振动和波 |
-| 8.04 | Allan Adams | MIT | 量子物理 I |
-| Physics for Game Developers | 各种 | 各种 | 应用物理 |
+### 颜色校正工作流
 
-### CS 相关物理主题
+1. **白平衡** - 使用 White Balance 效果校正色温。
+2. **曝光** - 调整亮度和对比度。
+3. **饱和度** - 增加或减少颜色强度。
+4. **曲线** - 按通道微调色调范围。
+5. **示波器** - 使用视频示波器验证校正。
 
-| 主题 | CS 应用 |
-|-------|----------------|
-| 经典力学 | 游戏物理、模拟 |
-| 电磁学 | 硬件、电路 |
-| 光学 | 计算机图形学、光线追踪 |
-| 量子计算 | 量子算法 |
-| 热力学 | 信息论、散热 |
-| 波动力学 | 信号处理 |
+### 视频示波器
 
----
+| 示波器 | 用途 |
+|--------|------|
+| RGB Parade | 并排显示红、绿、蓝电平 |
+| Waveform | 显示帧内亮度电平 |
+| Vectorscope | 显示色相和饱和度 |
+| Histogram | 色调值分布 |
 
-## 如何从视频课程中获得最大收益
+通过 `View > Video Scopes` 访问示波器。
 
-### 有效观看策略
+### 颜色效果
 
-| 策略 | 描述 |
-|----------|-------------|
-| 主动观看 | 做笔记，暂停思考 |
-| 1.5 倍速 | 熟悉后加速观看 |
-| 重看困难部分 | 复杂主题需要重复 |
-| 边看边写代码 | 立即实现概念 |
-| 使用转录 | 搜索和复习要点 |
+| 效果 | 控制 | 使用场景 |
+|------|------|----------|
+| White Balance | Temperature, Tint | 校正灯光颜色 |
+| Brightness/Contrast | Brightness, Contrast | 曝光校正 |
+| Hue/Saturation | Hue shift, Saturation, Lightness | 颜色强度 |
+| Curves | RGB channel curves | 精确色调控制 |
+| Color Balance | Shadows, Midtones, Highlights | Lift/Gamma/Gain |
+| Levels | Input/Output black/white points | 动态范围调整 |
 
-### 视频与实践结合
+### LUT 支持
 
-| 活动 | 比例 | 目的 |
-|----------|-------|---------|
-| 观看讲座 | 30% | 理解概念 |
-| 阅读补充材料 | 20% | 加深知识 |
-| 编码作业 | 40% | 建立技能 |
-| 与他人讨论 | 10% | 检验理解 |
+Kdenlive 支持查找表（LUT）用于应用颜色分级。
+
+1. 将 `LUT (3D)` 效果添加到片段。
+2. 浏览并选择 `.cube` LUT 文件。
+3. 调整强度参数。
+
+常见 LUT 来源包括电影风格、log 到 Rec709 转换和创意分级。
 
 ---
 
-## 总结
+## 音频编辑
 
-来自顶级大学的视频课程为学习计算机科学提供了无与伦比的机会。这里列出的课程涵盖了从入门编程到高级研究领域的全部 CS 主题。
+### 音频轨道管理
 
-如果你是初学者，从入门课程开始。如果你有经验，直接进入你最感兴趣的领域。始终将视频观看与动手实践结合以获得最佳效果。
+| 操作 | 方法 |
+|------|------|
+| Add audio track | 右键轨道头 > Insert Audio Track |
+| Mute track | 点击轨道头的扬声器图标 |
+| Solo track | Ctrl+点击扬声器图标 |
+| Lock track | 点击锁定图标 |
+| Adjust track height | 拖动轨道头边缘 |
+
+### 音频混音器
+
+Audio Mixer 面板提供每轨道的音量和声像控制。
+
+| 控制 | 描述 |
+|------|------|
+| Volume slider | 以 dB 调整轨道响度 |
+| Pan knob | 左右立体声位置 |
+| Mute button | 静音轨道 |
+| Solo button | 仅听此轨道 |
+| Master meter | 总体输出电平 |
+
+### 音频效果
+
+| 效果 | 用途 | 关键参数 |
+|------|------|----------|
+| Gain | 调整音量 | dB 值 |
+| Compressor | 减少动态范围 | Threshold, Ratio, Attack |
+| Equalizer | 塑形频率响应 | 频段 |
+| Noise Reduction | 去除背景噪音 | Profile, Reduction amount |
+| Normalize | 将峰值电平设为目标 dB | Target level |
+| Reverb | 添加空间氛围 | Room size, Dampening |
+
+### 音频同步
+
+| 方法 | 操作 |
+|------|------|
+| Manual sync | 可视对齐波形峰值 |
+| Audio alignment | Tools > Align Audio |
+| Sync marker | 在两个片段上放置标记，然后对齐 |
+
+### 录制旁白
+
+1. 前往 `Project > Add Clip > Record Audio`。
+2. 选择输入设备和设置。
+3. 按录制并解说。
+4. 停止录制以将片段添加到项目库和时间线。
+
+---
+
+## 关键帧
+
+关键帧允许您随时间动画化属性。
+
+### 添加关键帧
+
+1. 选择应用了效果的片段。
+2. 打开效果属性。
+3. 点击参数旁的关键帧按钮（菱形图标）。
+4. 将播放头移到不同位置。
+5. 更改参数值。新关键帧自动创建。
+
+### 关键帧插值
+
+| 类型 | 行为 | 使用场景 |
+|------|------|----------|
+| Linear | 恒定变化速率 | 均匀运动 |
+| Smooth | 缓入/缓出 | 自然运动 |
+| Discrete | 瞬间变化 | 阶梯过渡 |
+
+### 常见关键帧动画
+
+| 动画 | 参数 | 示例 |
+|------|------|------|
+| Fade in/out | Opacity | 1 秒内 0% 到 100% |
+| Zoom | Scale | 2 秒内 100% 到 150% |
+| Pan | X/Y Position | 帧内移动 |
+| Rotate | Rotation angle | 旋转效果 |
+| Color shift | Hue/Saturation | 随时间的颜色动画 |
+
+### 关键帧编辑器
+
+| 操作 | 快捷键/方法 |
+|------|-------------|
+| Add keyframe | 点击菱形图标或 `Ctrl + 点击` 曲线 |
+| Delete keyframe | 选择后按 `Delete` |
+| Move keyframe | 水平拖动（时间）或垂直拖动（值） |
+| Copy keyframe | 选择关键帧后 `Ctrl + C` |
+| Adjust curve | 拖动贝塞尔控制柄 |
+
+---
+
+## 字幕
+
+Kdenlive 包含内置字幕编辑器，用于创建文本叠加和图形。
+
+### 创建字幕片段
+
+1. 前往 `Project > Add Title Clip`。
+2. 字幕编辑器打开，显示画布。
+3. 添加文本、形状或图片。
+4. 配置属性（字体、颜色、位置）。
+5. 点击 `OK` 将字幕添加到 Project Bin。
+
+### 字幕编辑器工具
+
+| 工具 | 用途 |
+|------|------|
+| Text | 添加文本，可自定义字体、大小、颜色 |
+| Rectangle | 绘制矩形形状 |
+| Ellipse | 绘制圆形/椭圆形状 |
+| Image | 插入图片文件 |
+
+### 文本属性
+
+| 属性 | 选项 |
+|------|------|
+| Font | 任何已安装的系统字体 |
+| Size | 以像素可调 |
+| Color | 完整拾色器带透明度 |
+| Alignment | 左、中、右 |
+| Shadow | 带偏移和模糊的投影 |
+| Outline | 带颜色和宽度的文本边框 |
+
+### 字幕动画
+
+| 动画 | 描述 |
+|------|------|
+| Scroll | 垂直滚动文本（演职员表） |
+| Fade In | 字幕逐渐出现 |
+| Fade Out | 字幕逐渐消失 |
+
+### 下三分之一
+
+用于标识发言者的常见字幕样式：
+
+1. 创建字幕片段。
+2. 在底部添加半透明矩形。
+3. 在矩形上方添加姓名文本。
+4. 在姓名下方以较小字体添加头衔/角色文本。
+5. 保存并作为模板重用。
+
+---
+
+## 代理编辑
+
+代理编辑创建片段的低分辨率副本以获得更流畅的编辑体验，而渲染使用原始全分辨率文件。
+
+### 启用代理片段
+
+1. 前往 `Project > Project Settings`。
+2. 勾选 `Enable Proxy Clips`。
+3. 选择代理配置文件（如 MPEG-2 720p）。
+
+### 代理配置文件
+
+| 配置文件 | 分辨率 | 编解码器 | 速度 |
+|----------|--------|----------|------|
+| MPEG-2 720p | 1280x720 | MPEG-2 | 快 |
+| H.264 720p | 1280x720 | H.264 | 中 |
+| MJPEG 540p | 960x540 | MJPEG | 非常快 |
+
+### 代理工作流
+
+| 步骤 | 操作 |
+|------|------|
+| 1 | 导入高分辨率片段（4K, RAW） |
+| 2 | Kdenlive 自动生成代理片段 |
+| 3 | 使用代理片段编辑（流畅播放） |
+| 4 | 渲染使用原始片段（完全质量） |
+
+### 管理代理
+
+| 操作 | 方法 |
+|------|------|
+| Generate proxies | 右键片段 > Proxy Clip > Create |
+| Delete proxies | 右键片段 > Proxy Clip > Remove |
+| Toggle proxy/original | Project > Proxy Clip（切换） |
+
+---
+
+## 渲染和导出
+
+### 打开渲染对话框
+
+前往 `Project > Render` 或按 `Ctrl + Enter`。
+
+### 渲染预设
+
+| 预设 | 格式 | 质量 | 使用场景 |
+|------|------|------|----------|
+| MP4-H264/AAC | MP4 | 高 | 通用、Web 上传 |
+| WebM-VP8/Vorbis | WebM | 中 | Web 嵌入 |
+| MPEG-2 | MPEG | 高 | DVD 制作 |
+| H.265/HEVC | MP4 | 非常高 | 高质量、更小文件 |
+| Lossless FFV1 | AVI | 无损 | 归档、中间格式 |
+| Audio only | WAV/MP3 | 不同 | 播客、音乐 |
+
+### 自定义渲染设置
+
+| 设置 | 描述 | 建议 |
+|------|------|------|
+| Resolution | 输出尺寸 | 匹配项目或缩小 |
+| Frame rate | 每秒帧数 | 匹配项目配置文件 |
+| Bitrate | 视频数据速率 | 1080p 用 8-15 Mbps |
+| Codec | 视频压缩格式 | 兼容性用 H.264 |
+| Audio bitrate | 音频数据速率 | 192-320 kbps |
+| Audio sample rate | 音频频率 | 48000 Hz |
+
+### 渲染选项
+
+| 选项 | 描述 |
+|------|------|
+| Full project | 渲染整个时间线 |
+| Selected zone | 仅渲染选定区域（入/出点） |
+| More options | 附加编解码器参数 |
+
+### 批量渲染
+
+1. 设置多个不同设置的渲染任务。
+2. 将每个添加到渲染队列。
+3. 开始批量处理。所有任务顺序渲染。
+
+---
+
+## 键盘快捷键
+
+### 通用
+
+| 快捷键 | 操作 |
+|--------|------|
+| `Ctrl + N` | 新建项目 |
+| `Ctrl + O` | 打开项目 |
+| `Ctrl + S` | 保存项目 |
+| `Ctrl + Shift + S` | 另存为 |
+| `Ctrl + Z` | 撤销 |
+| `Ctrl + Shift + Z` | 重做 |
+| `Ctrl + Enter` | 渲染 |
+| `F11` | 全屏 |
+
+### 时间线
+
+| 快捷键 | 操作 |
+|--------|------|
+| `Space` | Play/Pause |
+| `J` | 反向播放 |
+| `K` | 停止 |
+| `L` | 正向播放 |
+| `I` | 设置入点 |
+| `O` | 设置出点 |
+| `Shift + R` | 剃刀工具 |
+| `X` | 提取选定范围 |
+
+### 导航
+
+| 快捷键 | 操作 |
+|--------|------|
+| `Home` | 跳到项目开头 |
+| `End` | 跳到项目结尾 |
+| `Left` | 上一帧 |
+| `Right` | 下一帧 |
+| `Shift + Left` | 后退 1 秒 |
+| `Shift + Right` | 前进 1 秒 |
+| `Ctrl + Left` | 跳到上一个剪切点 |
+| `Ctrl + Right` | 跳到下一个剪切点 |
+
+### 编辑
+
+| 快捷键 | 操作 |
+|--------|------|
+| `V` | 在播放头插入片段 |
+| `B` | 在播放头覆盖片段 |
+| `Delete` | 删除选区 |
+| `Shift + Delete` | 波纹删除 |
+| `Ctrl + C` | 复制 |
+| `Ctrl + V` | 粘贴 |
+| `Ctrl + A` | 全选 |
+| `Ctrl + Shift + A` | 取消全选 |

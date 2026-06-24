@@ -1,585 +1,508 @@
-# Qlib：量化投资平台
+# 使用 Qlib 进行量化投资
 
 ## 简介
 
-Qlib 是由微软研究院开发的开源、面向 AI 的量化投资平台。它为量化研究提供了全面的基础设施，包括数据管理、模型训练、回测和投资组合优化。Qlib 支持机器学习工作流，使研究人员和从业者能够开发和评估交易策略。
+Qlib 是微软开发的 AI 导向量化投资平台。它提供了数据处理、模型开发和交易策略实施的工具。
 
-**核心功能：**
+### 什么是 Qlib？
 
-- 端到端量化研究平台
-- 高性能数据管理
-- 机器学习模型集成
-- 回测框架
-- 投资组合优化
-- 风险分析工具
-- 因子分析能力
-- 可扩展架构
+Qlib 是一个量化投资研究平台，将机器学习与金融数据分析相结合，用于开发交易策略。
 
----
+| 特性 | 描述 |
+|------|------|
+| 数据管理 | 金融数据处理 |
+| 模型训练 | ML 模型开发 |
+| 策略回测 | 测试交易策略 |
+| 投资组合管理 | 优化投资组合 |
+| 风险分析 | 评估风险指标 |
+
+### 与其他方案的比较
+
+| 特性 | Qlib | Zipline | Backtrader |
+|------|------|---------|------------|
+| ML 集成 | 原生 | 有限 | 有限 |
+| 数据管理 | 内置 | 外部 | 外部 |
+| 云支持 | 是 | 否 | 否 |
+| 中国市场 | 是 | 否 | 否 |
+| 文档 | 良好 | 良好 | 良好 |
 
 ## 安装
 
 ### 系统要求
 
-| 组件 | 最低 | 推荐 |
-|-----------|---------|-------------|
-| Python | 3.7 | 3.9+ |
-| 内存 | 4 GB | 16 GB |
-| 存储 | 10 GB | 50 GB |
-| CPU | 2 核 | 8 核 |
-| 操作系统 | Linux、macOS、Windows | Linux |
+| 要求 | 最低 | 推荐 |
+|------|------|------|
+| Python | 3.7+ | 3.9+ |
+| 内存 | 4 GB | 16+ GB |
+| 存储 | 10 GB | 100+ GB |
+| CPU | 2 核 | 8+ 核 |
 
-### 通过 pip 安装
+### 安装步骤
 
 ```bash
+# 从 PyPI 安装
 pip install pyqlib
-```
 
-### 从源码安装
-
-```bash
+# 或从源码安装
 git clone https://github.com/microsoft/qlib.git
 cd qlib
 pip install -e ".[dev]"
 ```
 
-### 安装附加依赖
+### 数据准备
 
 ```bash
-# 完整安装，包含所有功能
-pip install pyqlib[dev,plot]
-
-# 安装特定 ML 框架
-pip install pyqlib torch
-pip install pyqlib tensorflow
-```
-
-### 验证安装
-
-```python
-import qlib
-print(qlib.__version__)
-
-# 初始化 Qlib
-qlib.init(provider_uri='~/.qlib/qlib_data/cn_data')
-```
-
----
-
-## 数据准备
-
-### 下载市场数据
-
-Qlib 提供内置脚本下载市场数据：
-
-**中国 A 股市场：**
-```bash
+# 下载市场数据
 python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/cn_data --region cn
-```
 
-**美国股票市场：**
-```bash
+# 美国市场
 python scripts/get_data.py qlib_data --target_dir ~/.qlib/qlib_data/us_data --region us
 ```
 
-### 数据结构
+## 数据结构
 
-| 组件 | 描述 |
-|-----------|-------------|
-| `calendars/` | 交易日历文件 |
-| `instruments/` | 股票池定义 |
-| `features/` | 价格和特征数据 |
-| `raw/` | 原始下载数据 |
+### 市场数据
 
-### 支持的数据源
-
-| 来源 | 类型 | 覆盖范围 |
-|--------|------|----------|
-| Yahoo Finance | 历史价格 | 全球市场 |
-| Tushare | 中国市场数据 | 中国 A 股 |
-| AKShare | 金融数据 | 中国市场 |
-| 自定义 CSV | 用户提供 | 任何市场 |
+| 字段 | 描述 |
+|------|------|
+| open | 开盘价 |
+| high | 最高价 |
+| low | 最低价 |
+| close | 收盘价 |
+| volume | 成交量 |
+| factor | 调整因子 |
 
 ### 数据格式
 
-Qlib 使用特定的二进制格式以提高效率：
+| 格式 | 描述 |
+|------|------|
+| CSV | 逗号分隔值 |
+| HDF5 | 层次数据格式 |
+| In-memory | Pandas DataFrame |
 
-| 文件 | 内容 |
-|------|---------|
-| `.day.bin` | 每日价格数据 |
-| `features/*.bin` | 单个特征数据 |
-| `instruments/all.txt` | 工具列表 |
+### 数据提供者
 
-### 自定义数据准备
-
-准备您自己的数据以在 Qlib 中使用：
-
-```python
-import pandas as pd
-from qlib.data.storage import CalendarStorage, InstrumentStorage
-
-# 加载自定义 CSV 数据
-df = pd.read_csv('my_data.csv')
-
-# 必需列
-# date, instrument, open, high, low, close, volume
-```
-
----
-
-## 配置
-
-### Qlib 初始化
-
-```python
-import qlib
-from qlib.config import REG_CN, REG_US
-
-# 初始化中国市场
-qlib.init(
-    provider_uri='~/.qlib/qlib_data/cn_data',
-    region=REG_CN,
-)
-
-# 初始化美国市场
-qlib.init(
-    provider_uri='~/.qlib/qlib_data/us_data',
-    region=REG_US,
-)
-```
-
-### 配置参数
-
-| 参数 | 描述 | 默认值 |
-|-----------|-------------|---------|
-| `provider_uri` | 数据目录路径 | 必填 |
-| `region` | 市场区域（CN、US） | REG_CN |
-| `expression_cache` | 缓存表达式 | True |
-| `dataset_cache` | 缓存数据集 | True |
-| `kernels` | 并行工作线程 | 1 |
-| `mem_cache_size_limit` | 内存缓存限制 | 2GB |
-
----
+| 提供者 | 描述 |
+|--------|------|
+| Local | 本地数据文件 |
+| Remote | 远程数据服务器 |
+| Yahoo | Yahoo Finance |
+| Alpha Vantage | Alpha Vantage API |
 
 ## 特征工程
 
 ### 内置特征
 
-Qlib 提供丰富的内置特征：
+| 特征 | 描述 |
+|------|------|
+| Price | 基于价格的特征 |
+| Volume | 基于成交量的特征 |
+| Technical | 技术指标 |
+| Fundamental | 基本面数据 |
+| Custom | 用户自定义特征 |
 
-**价格特征：**
+### 技术指标
 
-| 特征 | 表达式 | 描述 |
-|---------|------------|-------------|
-| 开盘价 | `$open` | 开盘价格 |
-| 最高价 | `$high` | 最高价格 |
-| 最低价 | `$lowest` | 最低价格 |
-| 收盘价 | `$close` | 收盘价格 |
-| 成交量 | `$volume` | 交易量 |
-| VWAP | `$vwap` | 成交量加权平均价 |
+```python
+import qlib
+from qlib.contrib.data.handler import Alpha158
 
-**技术指标：**
+# 初始化处理器
+handler = Alpha158(
+    instruments="csi300",
+    start_time="2020-01-01",
+    end_time="2023-12-31"
+)
 
-| 指标 | 表达式 | 描述 |
-|-----------|------------|-------------|
-| MA5 | `Mean($close, 5)` | 5 日移动平均 |
-| RSI | `Ref($close, 1) / $close` | 相对强弱 |
-| MACD | 自定义表达式 | 移动平均收敛 |
-| 布林带 | 自定义表达式 | 布林带 |
+# 获取特征
+features = handler.fetch()
+```
+
+### Alpha158 特征
+
+| 类别 | 数量 | 示例 |
+|------|------|------|
+| KMID | 6 | 价格动量 |
+| KLEN | 6 | 价格范围 |
+| KSFT | 6 | 价格偏移 |
+| KLOW | 12 | 低价特征 |
+| OPEN | 12 | 开盘价特征 |
+| HIGH | 12 | 最高价特征 |
+| LOW | 12 | 最低价特征 |
+| CLOSE | 12 | 收盘价特征 |
+| VOLUME | 12 | 成交量特征 |
+| RSV | 6 | 相对强弱 |
+| ROLL | 12 | 滚动特征 |
+| CORR | 12 | 相关性特征 |
+| CORD | 12 | 相关性差异 |
+| SUMP | 12 | 正向求和特征 |
+| SUMN | 12 | 负向求和特征 |
+| SUMD | 12 | 求和差异特征 |
+| VMA | 6 | 成交量均线 |
+| VSTD | 6 | 成交量标准差 |
+| WVMA | 6 | 加权成交量均线 |
+| VSUMP | 6 | 成交量正向求和 |
+| VSUMN | 6 | 成交量负向求和 |
+| VSUMD | 6 | 成交量求和差异 |
 
 ### 自定义特征
 
-使用 Qlib 表达式定义自定义特征：
-
 ```python
-from qlib.data import D
+from qlib.data.dataset import DatasetH
 
 # 定义自定义特征
-expressions = [
-    'Ref($close, 1)',           # 前收盘价
-    'Mean($close, 5)',          # 5 日 MA
-    'Std($close, 20)',          # 20 日标准差
-    '$close / Ref($close, 1)',  # 日收益率
+FEATURES = [
+    "Ref($close, 1) / $close - 1",  # 1日收益
+    "Ref($close, 5) / $close - 1",  # 5日收益
+    "Mean($close, 10) / $close - 1",  # 均线比率
 ]
 
-# 获取特征数据
-df = D.features(
-    instruments=['SH000001'],
-    expressions=expressions,
-    start_time='2020-01-01',
-    end_time='2023-12-31',
+# 创建数据集
+dataset = DatasetH(
+    handler={
+        "class": "Alpha158",
+        "module_path": "qlib.contrib.data.handler",
+        "kwargs": {
+            "instruments": "csi300",
+            "start_time": "2020-01-01",
+            "end_time": "2023-12-31",
+        },
+    }
 )
 ```
 
----
-
-## 模型训练
+## 模型开发
 
 ### 内置模型
 
 | 模型 | 类型 | 描述 |
-|-------|------|-------------|
-| LightGBM | 基于树 | 梯度提升 |
-| XGBoost | 基于树 | 极端梯度提升 |
-| CatBoost | 基于树 | 类别提升 |
-| LSTM | 深度学习 | 长短期记忆网络 |
+|------|------|------|
+| LightGBM | 树模型 | 梯度提升 |
+| XGBoost | 树模型 | 梯度提升 |
+| CatBoost | 树模型 | 梯度提升 |
+| Linear | 线性 | 线性回归 |
+| LSTM | 深度学习 | 长短期记忆 |
 | GRU | 深度学习 | 门控循环单元 |
-| Transformer | 深度学习 | 基于注意力的模型 |
-| ALSTM | 深度学习 | 注意力 LSTM |
-| TRA | 深度学习 | 基于轨迹 |
+| Transformer | 深度学习 | 注意力模型 |
 
-### 训练 LightGBM 模型
+### 训练模型
 
 ```python
 import qlib
 from qlib.contrib.model.gbdt import LGBModel
-from qlib.data.dataset import DatasetH
 
-# 初始化
-qlib.init(provider_uri='~/.qlib/qlib_data/cn_data')
-
-# 定义数据集
-dataset_config = {
-    "class": "DatasetH",
-    "module_path": "qlib.data.dataset",
-    "kwargs": {
-        "handler": {
-            "class": "Alpha158",
-            "module_path": "qlib.contrib.data.handler",
-            "kwargs": {
-                "start_time": "2008-01-01",
-                "end_time": "2020-12-31",
-                "fit_start_time": "2008-01-01",
-                "fit_end_time": "019-12-31",
-                "instruments": "csi300",
-            },
-        },
-        "segments": {
-            "train": ("2008-01-01", "2019-12-31"),
-            "valid": ("2020-01-01", "2020-12-31"),
-            "test": ("2021-01-01", "2021-12-31"),
-        },
-    },
-}
-
-dataset = DatasetH(**dataset_config["kwargs"])
-
-# 定义模型
-model = LGBModel()
+# 初始化模型
+model = LGBModel(
+    loss="mse",
+    colsample_bytree=0.8879,
+    learning_rate=0.0421,
+    subsample=0.8789,
+    lambda_l1=205.6999,
+    lambda_l2=580.9768,
+    max_depth=8,
+    num_leaves=210,
+    num_threads=20,
+)
 
 # 训练模型
 model.fit(dataset)
 ```
 
-### 训练深度学习模型
+### 模型配置
+
+```python
+# LightGBM 参数
+LGB_PARAMS = {
+    "colsample_bytree": 0.8879,
+    "learning_rate": 0.0421,
+    "subsample": 0.8789,
+    "lambda_l1": 205.6999,
+    "lambda_l2": 580.9768,
+    "max_depth": 8,
+    "num_leaves": 210,
+}
+```
+
+### 深度学习模型
 
 ```python
 from qlib.contrib.model.pytorch_lstm import LSTM
 
-model_config = {
-    "class": "LSTM",
-    "module_path": "qlib.contrib.model.pytorch_lstm",
-    "kwargs": {
-        "d_feat": 6,
-        "hidden_size": 64,
-        "num_layers": 2,
-        "dropout": 0.0,
-        "n_epochs": 200,
-        "lr": 0.001,
-        "batch_size": 2000,
-    },
-}
-
-model = LSTM(**model_config["kwargs"])
-model.fit(dataset)
+model = LSTM(
+    d_feat=6,
+    hidden_size=64,
+    num_layers=2,
+    dropout=0.0,
+    lr=0.001,
+)
 ```
 
-### 模型评估
+## 策略开发
 
-| 指标 | 描述 | 理想值 |
-|--------|-------------|-------------|
-| IC | 信息系数 | > 0.05 |
-| Rank IC | 排名信息系数 | > 0.05 |
-| ICIR | IC 信息比率 | > 0.5 |
-| 收益 | 年化收益 | 越高越好 |
-| 最大回撤 | 最大回撤 | 越低越好 |
-| 夏普比率 | 夏普比率 | > 1.0 |
+### 内置策略
 
----
+| 策略 | 描述 |
+|------|------|
+| TopK | 选择前 K 只股票 |
+| WeightStrategy | 基于权重的分配 |
+| SignalStrategy | 基于信号的交易 |
+
+### TopK 策略
+
+```python
+from qlib.contrib.strategy.signal_strategy import TopkDropoutStrategy
+
+strategy = TopkDropoutStrategy(
+    signal=predictions,
+    topk=50,
+    n_drop=5,
+)
+```
+
+### 自定义策略
+
+```python
+from qlib.contrib.strategy.signal_strategy import BaseSignalStrategy
+
+class MyStrategy(BaseSignalStrategy):
+    def __init__(self, signal, **kwargs):
+        super().__init__(signal, **kwargs)
+    
+    def generate_target_weight_position(self, score):
+        # 自定义权重计算
+        weights = score / score.sum()
+        return weights
+```
 
 ## 回测
 
 ### 运行回测
 
 ```python
-from qlib.contrib.evaluate import backtest_daily
-from qlib.contrib.strategy import TopkDropoutStrategy
-
-# 定义策略
-strategy_config = {
-    "class": "TopkDropoutStrategy",
-    "module_path": "qlib.contrib.strategy",
-    "kwargs": {
-        "topk": 50,
-        "n_drop": 5,
-    },
-}
+from qlib.backtest import backtest
 
 # 运行回测
-portfolio_metric, indicator = backtest_daily(
-    start_time="2021-01-01",
-    end_time="2021-12-31",
-    strategy=strategy_config,
+report, metrics = backtest(
+    start_time="2023-01-01",
+    end_time="2023-12-31",
+    strategy=strategy,
     executor={
         "class": "SimulatorExecutor",
         "module_path": "qlib.backtest.executor",
         "kwargs": {
             "time_per_step": "day",
-            "generate_portfolio_metrics": True,
+            "generate_report": True,
         },
-    },
-    model=model,
-    dataset=dataset,
+    }
 )
 ```
 
-### 回测结果
+### 回测指标
 
 | 指标 | 描述 |
-|--------|-------------|
-| 年化收益 | 年收益率百分比 |
-| 年化波动率 | 年波动率 |
-| 夏普比率 | 风险调整后收益 |
-| 最大回撤 | 最大峰谷下降 |
-| 卡玛比率 | 收益 / 最大回撤 |
-| 胜率 | 盈利交易百分比 |
-| 盈亏比 | 总盈利 / 总亏损 |
+|------|------|
+| Annual return | 年化收益率 |
+| Sharpe ratio | 夏普比率 |
+| Max drawdown | 最大回撤 |
+| Win rate | 胜率 |
+| Profit factor | 盈亏比 |
 
-### 策略类型
-
-| 策略 | 描述 |
-|----------|-------------|
-| TopkDropout | 选择前 K 只股票，每日卖出 N 只 |
-| WeightStrategyBase | 基于权重的投资组合 |
-| EnhancedIndexStrategy | 用 alpha 跟踪指数 |
-
----
-
-## 投资组合优化
-
-### 均值-方差优化
+### 绩效分析
 
 ```python
-from qlib.contrib.portfolio.optimizer import MeanVarianceOptimizer
+from qlib.contrib.report import analysis_model, analysis_position
 
-optimizer = MeanVarianceOptimizer(
-    lam=0.5,           # 风险厌恶参数
-    tau=0.05,          # 预期收益的不确定性
-    method='inv',      # 协方差反转方法
-)
+# 分析持仓
+analysis_position.report_graph(report)
 
-weights = optimizer.get_weight(
-    expected_returns=expected_returns,
-    cov_matrix=covariance_matrix,
+# 分析模型
+analysis_model.model_performance_graph(predictions)
+```
+
+## 投资组合管理
+
+### 投资组合优化
+
+```python
+from qlib.contrib.strategy.weight_strategy import WeightStrategyStrategy
+
+strategy = WeightStrategyStrategy(
+    signal=predictions,
+    method="max_sharpe",
 )
 ```
 
 ### 优化方法
 
-| 方法 | 描述 | 使用场景 |
-|--------|-------------|----------|
-| 均值-方差 | 经典 Markowitz | 通用 |
-| 风险平价 | 等风险贡献 | 分散化 |
-| 最小方差 | 最小化投资组合方差 | 保守型 |
-| 最大夏普 | 最大化夏普比率 | 激进型 |
-
----
+| 方法 | 描述 |
+|------|------|
+| equal | 等权重 |
+| min_variance | 最小方差 |
+| max_sharpe | 最大夏普比率 |
+| risk_parity | 风险平价 |
+| black_litterman | Black-Litterman 模型 |
 
 ## 风险分析
 
 ### 风险指标
 
-| 指标 | 公式 | 描述 |
-|--------|---------|-------------|
-| VaR | 收益的百分位数 | 风险价值 |
-| CVaR | 尾部损失的均值 | 条件风险价值 |
-| Beta | 与市场的协方差 | 市场敏感度 |
-| Alpha | 超越基准的超额收益 | 技能收益 |
-| 跟踪误差 | 超额收益的标准差 | 主动风险 |
+| 指标 | 描述 |
+|------|------|
+| Value at Risk | 潜在损失 |
+| Conditional VaR | 预期短缺 |
+| Beta | 市场敏感度 |
+| Alpha | 超额收益 |
+| Volatility | 价格波动率 |
 
-### 计算风险指标
+### 风险分析代码
 
 ```python
-from qlib.contrib.evaluate import risk_analysis
+from qlib.contrib.eva import risk_analysis
 
-# 分析回测结果
-risk_report = risk_analysis(portfolio_metric)
-
-print(risk_report)
+# 分析风险
+risk_metrics = risk_analysis(report)
+print(risk_metrics)
 ```
 
----
+## 数据管道
 
-## 因子分析
+### 数据流
 
-### 因子评估
+```
+原始数据 → 处理 → 特征 → 模型 → 预测 → 策略 → 回测
+```
 
-评估因子的预测能力：
+### 数据处理
 
 ```python
-from qlib.contrib.evaluate import backtest_daily
+from qlib.data.dataset import DatasetH
 
-# 单因子分析
-factor_data = D.features(
-    instruments='csi300',
-    expressions=['$close / Ref($close, 5)'],
-    start_time='2020-01-01',
-    end_time='2021-12-31',
+# 使用处理器创建数据集
+dataset = DatasetH(
+    handler={
+        "class": "Alpha158",
+        "module_path": "qlib.contrib.data.handler",
+        "kwargs": {
+            "instruments": "csi300",
+            "start_time": "2020-01-01",
+            "end_time": "2023-12-31",
+        },
+    }
 )
 
-# 计算 IC
-ic = factor_data.corrwith(returns)
-print(f"IC: {ic.mean():.4f}")
-print(f"ICIR: {ic.mean() / ic.std():.4f}")
-```
-
-### 因子类别
-
-| 类别 | 示例 |
-|----------|----------|
-| 动量 | 价格动量、成交量动量 |
-| 价值 | 市盈率、市净率 |
-| 质量 | ROE、利润率 |
-| 波动率 | 历史波动率、Beta |
-| 流动性 | 换手率、Amihud 非流动性 |
-| 规模 | 市值 |
-
----
-
-## ML 模型对比
-
-| 模型 | 速度 | 准确性 | 可解释性 | 内存 |
-|-------|-------|----------|-----------------|--------|
-| LightGBM | 快 | 高 | 中等 | 低 |
-| XGBoost | 快 | 高 | 中等 | 低 |
-| CatBoost | 中等 | 高 | 中等 | 中等 |
-| LSTM | 慢 | 中等 | 低 | 高 |
-| GRU | 慢 | 中等 | 低 | 高 |
-| Transformer | 慢 | 高 | 低 | 高 |
-| ALSTM | 慢 | 中等 | 低 | 高 |
-
----
-
-## API 使用
-
-### 数据 API
-
-```python
-from qlib.data import D
-
-# 获取工具
-instruments = D.instruments('csi300')
-inst_list = D.list_instruments(instruments=instruments)
-
-# 获取特征
-features = D.features(
-    instruments=['SH600000'],
-    expressions=['$close', '$volume', 'Ref($close, 1)'],
-    start_time='2020-01-01',
-    end_time='2021-12-31',
+# 获取数据
+data = dataset.prepare(
+    segments={
+        "train": ("2020-01-01", "2021-12-31"),
+        "valid": ("2022-01-01", "2022-12-31"),
+        "test": ("2023-01-01", "2023-12-31"),
+    }
 )
-
-# 获取日历
-calendar = D.calendar(start_time='2020-01-01', end_time='2021-12-31')
 ```
 
-### 模型 API
+## 配置
+
+### Qlib 配置
 
 ```python
-# 预测
-predictions = model.predict(dataset)
+import qlib
+from qlib.config import REG_CN
 
-# 评估
-from qlib.contrib.evaluate import backtest_daily
-metrics = backtest_daily(predictions)
+qlib.init(
+    provider_uri="~/.qlib/qlib_data/cn_data",
+    region=REG_CN,
+)
 ```
 
----
+### 配置选项
 
-## 工作流自动化
+| 选项 | 描述 |
+|------|------|
+| provider_uri | 数据目录 |
+| region | 市场区域 |
+| expression_cache | 缓存表达式 |
+| dataset_cache | 缓存数据集 |
 
-### 使用 YAML 配置
+## 高级功能
 
-Qlib 支持通过 YAML 进行工作流自动化：
+### 多模型集成
 
-```yaml
-qlib_init:
-    provider_uri: ~/.qlib/qlib_data/cn_data
+```python
+from qlib.contrib.ensemble import Ensemble
 
-data_handler_config: &data_handler_config
-    start_time: 2008-01-01
-    end_time: 2020-12-31
-    fit_start_time: 2008-01-01
-    fit_end_time: 2019-12-31
-    instruments: csi300
-
-task:
-    model:
-        class: LGBModel
-        module_path: qlib.contrib.model.gbdt
-        kwargs:
-            loss: mse
-            colsample_bytree: 0.8879
-            learning_rate: 0.0421
-            subsample: 0.8789
-            lambda_l1: 205.6999
-            lambda_l2: 580.9768
-            max_depth: 8
-            num_leaves: 210
-    dataset:
-        class: DatasetH
-        module_path: qlib.data.dataset
-        kwargs:
-            handler:
-                class: Alpha158
-                module_path: qlib.contrib.data.handler
-                kwargs: *data_handler_config
-            segments:
-                train: [2008-01-01, 2019-12-31]
-                valid: [2020-01-01, 2020-12-31]
-                test: [2021-01-01, 2021-12-31]
+# 创建集成模型
+ensemble = Ensemble(
+    models=[model1, model2, model3],
+    method="average",
+)
 ```
 
-### 运行工作流
+### 超参数调优
 
-```bash
-python qlib/cli/run_workflow.py --config workflow_config.yaml
+```python
+from qlib.contrib.tuner import Tuner
+
+tuner = Tuner(
+    model=LGBModel,
+    param_grid={
+        "learning_rate": [0.01, 0.05, 0.1],
+        "max_depth": [5, 8, 10],
+    },
+)
 ```
 
----
+## 部署
 
-## 故障排除
+### 实盘交易
 
-### 常见问题
+```python
+from qlib.contrib.strategy.signal_strategy import TopkDropoutStrategy
 
-| 问题 | 解决方案 |
-|-------|----------|
-| 数据下载失败 | 检查网络，尝试其他数据源 |
-| 内存错误 | 减少数据量，增加内存 |
-| 训练缓慢 | 减少特征，使用 GPU |
-| 导入错误 | 重新安装依赖 |
-| CUDA 错误 | 检查 GPU 驱动，使用 CPU 回退 |
+# 创建实盘策略
+strategy = TopkDropoutStrategy(
+    signal=model.predict(live_data),
+    topk=50,
+    n_drop=5,
+)
+```
 
-### 性能建议
+### 部署选项
 
-1. 使用 SSD 存储数据
-2. 增加内存缓存大小
-3. 启用并行处理
-4. 使用适当的数据粒度
-5. 分析代码以识别瓶颈
+| 选项 | 描述 |
+|------|------|
+| Paper trading | 模拟交易 |
+| Live trading | 实盘交易 |
+| Batch mode | 定时运行 |
 
----
+## 最佳实践
+
+### 开发流程
+
+| 步骤 | 描述 |
+|------|------|
+| 1. 数据 | 准备和清洗数据 |
+| 2. 特征 | 特征工程 |
+| 3. 模型 | 训练和验证 |
+| 4. 回测 | 测试策略 |
+| 5. 优化 | 调参 |
+| 6. 部署 | 上线 |
+
+### 常见陷阱
+
+| 陷阱 | 解决方案 |
+|------|----------|
+| 过拟合 | 使用交叉验证 |
+| 前视偏差 | 注意数据分割 |
+| 幸存者偏差 | 包含退市股票 |
+| 交易成本 | 包含真实成本 |
 
 ## 总结
 
-Qlib 是一个强大的量化投资平台，为研究和交易提供端到端的基础设施。其数据管理、特征工程、模型训练和回测的集成使其成为量化研究人员的综合解决方案。该平台支持传统金融模型和现代机器学习方法，并为高级用户提供广泛的自定义选项。
+| 组件 | 用途 |
+|------|------|
+| 数据 | 市场数据管理 |
+| 特征 | 技术指标 |
+| 模型 | ML 模型训练 |
+| 策略 | 交易逻辑 |
+| 回测 | 策略测试 |
+| 投资组合 | 资产配置 |

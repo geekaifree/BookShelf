@@ -1,4 +1,10 @@
-# OpenVDB: 视觉特效体积数据
+# 体积数据
+
+> 本文档整合了以下源文件：volume.md
+
+---
+
+## 来源：volume.md
 
 ## 简介
 
@@ -367,3 +373,6 @@ openvdb.write("levelset.vdb", sphere)
 | GitHub | github.com/AcademySoftwareFoundation/openvdb |
 | API 参考 | openvdb.org/documentation |
 | SIGGRAPH 课程 | openvdb.org/documentation |
+
+
+---

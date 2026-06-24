@@ -1,4 +1,10 @@
-# ONLYOFFICE 文档服务器教程
+# 办公软件
+
+> 本文档整合了以下源文件：office.md
+
+---
+
+## 来源：office.md
 
 ## 简介
 
@@ -278,3 +284,6 @@ cat backup.sql | docker exec -i onlyoffice psql -U onlyoffice onlyoffice
 | 集成 | API、插件、WOPI 协议和平台连接器 |
 | 安全 | JWT 认证、细粒度权限和加密 |
 | 部署 | 基于 Docker，依赖 PostgreSQL 和 Redis |
+
+
+---

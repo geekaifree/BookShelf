@@ -1,4 +1,10 @@
-# Language Learning: A Practical Guide
+# 语言学习
+
+> 本文档整合了以下源文件：language.md
+
+---
+
+## 来源：language.md
 
 ## Choosing a Method
 
@@ -155,3 +161,6 @@ Total: approximately 1 hour per day on weekdays, more on weekends. Consistency o
 - Using only one resource or method.
 - Comparing your progress to others rather than to your past self.
 - Skipping listening and pronunciation in favor of reading and writing.
+
+
+---

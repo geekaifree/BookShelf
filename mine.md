@@ -1,4 +1,10 @@
-# NiceHash QuickMiner：加密货币挖矿指南
+# 数据挖掘
+
+> 本文档整合了以下源文件：mine.md
+
+---
+
+## 来源：mine.md
 
 ## 简介
 
@@ -498,3 +504,6 @@ NiceHash QuickMiner 是由 NiceHash 开发的加密货币挖矿工具，NiceHash
 ## 总结
 
 NiceHash QuickMiner 为加密货币挖矿提供了一个易于入门的工具，具有自动优化和收益功能。其易用性、内置超频和与 NiceHash 市场的集成使其适合初学者和经验丰富的矿工。关键考虑因素包括电费、GPU 选择、适当散热和安全措施。该平台持续演进，支持新算法并提高效率。
+
+
+---

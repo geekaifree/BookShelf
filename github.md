@@ -1,4 +1,10 @@
-# GitHub 实用技巧速查手册
+# GitHub
+
+> 本文档整合了以下源文件：github.md
+
+---
+
+## 来源：github.md
 
 本文档整理了 Git 和 GitHub 的实用功能和技巧，涵盖 GitHub 平台操作和 Git 命令行两大类别。
 
@@ -250,3 +256,6 @@ git config --global color.ui 1
 5. **使用相对链接**：Markdown 文档中使用相对路径，提高可移植性
 6. **善用模板文件**：`CONTRIBUTING`、`ISSUE_TEMPLATE`、`PULL_REQUEST_TEMPLATE` 规范协作流程
 7. **利用 PR 检出**：配置自动获取 PR 分支，方便本地测试和审查
+
+
+---

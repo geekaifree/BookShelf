@@ -1,4 +1,10 @@
-# MicroPython 编程指南
+# Python
+
+> 本文档整合了以下源文件：python.md
+
+---
+
+## 来源：python.md
 
 ## 简介
 
@@ -472,3 +478,6 @@ gc.collect()
 | MQTT | IoT 消息传递 |
 | REPL | 交互式编程 |
 | 文件 | 存储数据 |
+
+
+---

@@ -1,4 +1,10 @@
-# Windows 激活脚本
+# Windows 激活
+
+> 本文档整合了以下源文件：activate.md
+
+---
+
+## 来源：activate.md
 
 ## 简介
 
@@ -286,3 +292,6 @@ Get-CimInstance -ClassName SoftwareLicensingProduct |
 | KMS | 企业网络 |
 | MAK | 企业单独激活 |
 | Microsoft 365 | 订阅用户 |
+
+
+---

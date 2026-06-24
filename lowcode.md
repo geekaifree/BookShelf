@@ -1,4 +1,10 @@
-# Budibase: 开源低代码平台
+# 低代码
+
+> 本文档整合了以下源文件：lowcode.md
+
+---
+
+## 来源：lowcode.md
 
 ## 简介
 
@@ -374,3 +380,6 @@ curl -H "Authorization: Bearer YOUR_API_KEY" \
 | GitHub | github.com/Budibase/budibase |
 | 文档 | docs.budibase.com |
 | 社区 | community.budibase.com |
+
+
+---

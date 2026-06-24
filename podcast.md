@@ -1,4 +1,10 @@
-# AntennaPod: 开源播客客户端
+# 播客
+
+> 本文档整合了以下源文件：podcast.md
+
+---
+
+## 来源：podcast.md
 
 ## 简介
 
@@ -258,3 +264,6 @@ AntennaPod 是一款免费、开源的 Android 播客管理和播放器。它提
 | GitHub | github.com/AntennaPod/AntennaPod |
 | 文档 | antennapod.org/documentation |
 | 论坛 | forum.antennapod.org |
+
+
+---

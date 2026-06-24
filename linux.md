@@ -1,4 +1,10 @@
-# Linux 软件指南
+# Linux
+
+> 本文档整合了以下源文件：linux.md
+
+---
+
+## 来源：linux.md
 
 ## 简介
 
@@ -383,3 +389,6 @@ sudo timeshift --create --comments "Before update"
 | 媒体 | VLC、GIMP |
 | 终端 | Alacritty、Kitty |
 | 文件管理器 | Dolphin、Nautilus |
+
+
+---

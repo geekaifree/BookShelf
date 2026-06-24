@@ -1,4 +1,10 @@
-# YouTube Channels & Other Resources
+# YouTube
+
+> 本文档整合了以下源文件：youtube.md
+
+---
+
+## 来源：youtube.md
 
 **Source:** https://github.com/PrejudiceNeutrino/YouTube_Channels
 
@@ -189,3 +195,6 @@ This tutorial covers the key resources and tools from the [PrejudiceNeutrino/You
 |----------|------|
 | Google Docs Version | [https://docs.google.com/document/d/1M5kvDldTCDCNgrlNx6fcDF1h81fnKX6Ovvm20L06Jtk/edit](https://docs.google.com/document/d/1M5kvDldTCDCNgrlNx6fcDF1h81fnKX6Ovvm20L06Jtk/edit) |
 
+
+
+---

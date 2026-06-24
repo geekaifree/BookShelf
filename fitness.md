@@ -1,100 +1,251 @@
-# 火花健身
+# Workout Cool 健身平台教程
 
-**来源：** https://github.com/CodeWithCJ/SparkyFitness
+## 简介
 
-＃＃ 概述
+Workout Cool 是一款开源健身平台，提供锻炼跟踪、运动库和训练计划管理。它专为希望跟踪健身进度并遵循结构化锻炼计划的个人设计。
 
-本教程涵盖了 [CodeWithCJ/SparkyFitness](https://github.com/CodeWithCJ/SparkyFitness) 项目中的关键资源和工具。
+| 特性 | 描述 |
+|---------|-------------|
+| 运动库 | 包含说明的全面运动数据库 |
+| 锻炼跟踪 | 记录锻炼、组数、次数和重量 |
+| 训练计划 | 预制和可自定义的锻炼计划 |
+| 进度跟踪 | 可视化图表和统计数据 |
+| 开源 | 免费使用和自托管 |
 
-## 火花健身
+## 架构
 
-MyFitnessPal 的自托管、隐私至上的替代方案。跟踪营养、锻炼、身体指标和健康数据，同时完全控制您的数据。
+### 技术栈
 
-SparkyFitness 是一个自托管健身跟踪平台，由以下部分组成：
+| 组件 | 技术 |
+|-----------|-----------|
+| 前端 | 响应式设计的 JavaScript 框架 |
+| 后端 | 基于 Node.js 或 Python 的 API 服务器 |
+| 数据库 | PostgreSQL 或 SQLite 数据存储 |
+| 认证 | 用户注册和登录系统 |
 
-- 后端服务器（API + 数据存储）
-- 基于网络的前端
-- 适用于 iOS 和 Android 的本机移动应用程序
+### 数据模型
 
-它在您控制的基础设施上存储和管理健康数据，而不依赖第三方服务。
+| 实体 | 描述 |
+|--------|-------------|
+| User | 带有个人资料和偏好的账户 |
+| Exercise | 包含肌肉群和说明的单个运动 |
+| Workout | 一次会话中执行的运动集合 |
+| Program | 结构化的多周训练计划 |
+| Set | 运动中的单组（次数、重量、时长） |
 
-## 核心特性
+## 安装
 
-- 营养、运动、水分、睡眠、禁食、情绪和身体测量跟踪
-- 目标设定和每日签到
-- 交互式图表和长期报告
-- 多个用户配置文件和家庭访问
-- 浅色和深色主题
-- OIDC、TOTP、密码、MFA 等。
-
-## 健康与设备集成
-
-SparkyFitness 可以同步多个健康和健身平台的数据：
-
-- **苹果健康**（iOS）
-- **Google Health Connect** (Android)
-- **Fitbit**
-- **Garmin 连接**
-- **Withings**
-- **极流** 
-- **Hevy**（未经测试）
-- **OpenFoodFacts**
-- **美国农业部**
-- **脂肪的秘密**
-- **营养x**
-- **梅莉**
-- **泥炉**
-- **Strava**（部分测试）
-- **诺里什**
-- **Yazio**（使用非官方 API）
-
-集成会自动将步数、锻炼和睡眠等活动数据以及体重和身体测量等健康指标同步到您的 SparkyFitness 服务器。
-
-## 可选的人工智能功能（测试版）
-
-SparkyAI 提供了一个用于记录数据和审查进度的对话界面。
-
-- 通过聊天记录食物、锻炼、身体统计数据和步数
-- 上传食物图像以进行自动膳食记录
-- 保留对话历史记录以供后续跟进
-
-注意：AI 功能目前处于测试阶段。
-
-＃＃ 安装
-
-选择运行 SparkyFitness 的两种方式之一：
-
-## 1. 自托管
-
-使用 Docker Compose 在几分钟内运行 SparkyFitness 服务器：
+### Docker 部署
 
 ```bash
+docker run -d \
+  --name=workout-cool \
+  -p 3000:3000 \
+  -v ./data:/app/data \
+  -e DATABASE_URL=postgresql://user:pass@db:5432/workout \
+  --restart unless-stopped \
+  workout-cool/workout-cool:latest
+```
 
-## 1. Create a new folder
+### Docker Compose
 
-mkdir sparkyfitness && cd sparkyfitness
+```yaml
+version: "3.8"
+services:
+  app:
+    image: workout-cool/workout-cool:latest
+    container_name: workout-cool
+    ports:
+      - "3000:3000"
+    environment:
+      - DATABASE_URL=postgresql://workout:password@db:5432/workout
+      - SECRET_KEY=your_secret_key
+    depends_on:
+      - db
+    restart: unless-stopped
 
-## 2. Download Docker files only
+  db:
+    image: postgres:15
+    container_name: workout-db
+    environment:
+      - POSTGRES_USER=workout
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=workout
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    restart: unless-stopped
 
-curl -L -o docker-compose.yml https://github.com/CodeWithCJ/SparkyFitness/releases/latest/download/docker-compose.prod.yml
-curl -L -o .env https://github.com/CodeWithCJ/SparkyFitness/releases/latest/download/default.env.example
+volumes:
+  postgres_data:
+```
 
-## 4. Start the app
+## 运动库
 
-docker compose pull && docker compose up -d
+### 运动分类
 
-## Key Resources
+| 分类 | 示例运动 |
+|----------|------------------|
+| 胸部 | 卧推、俯卧撑、飞鸟 |
+| 背部 | 引体向上、划船、硬拉 |
+| 肩部 | 过头推举、侧平举、面拉 |
+| 手臂 | 二头弯举、三头臂屈伸、锤式弯举 |
+| 腿部 | 深蹲、弓步、腿举、提踵 |
+| 核心 | 平板支撑、卷腹、俄罗斯转体 |
+| 有氧 | 跑步、骑行、划船、跳绳 |
 
-| Resource | Link |
-|----------|------|
-| https://codewithcj.github.io/SparkyFitness/ | [https://codewithcj.github.io/SparkyFitness/](https://codewithcj.github.io/SparkyFitness/) |
-| PikaPods | [https://pikapods.com/](https://pikapods.com/) |
-| Documentation Site | [https://codewithcj.github.io/SparkyFitness/](https://codewithcj.github.io/SparkyFitness/) |
-| Installation Guide | [https://codewithcj.github.io/SparkyFitness/install/docker-compose](https://codewithcj.github.io/SparkyFitness/install/docker-compose) |
-| Features Overview | [https://codewithcj.github.io/SparkyFitness/features](https://codewithcj.github.io/SparkyFitness/features) |
-| Development Workflow | [https://codewithcj.github.io/SparkyFitness/developer/getting-started](https://codewithcj.github.io/SparkyFitness/developer/getting-started) |
-| iOS App Info | [https://github.com/CodeWithCJ/SparkyFitness/wiki/Apple-Health-Integration](https://github.com/CodeWithCJ/SparkyFitness/wiki/Apple-Health-Integration) |
-| Android App Info | [https://github.com/CodeWithCJ/SparkyFitness/wiki/Android-Mobile-App](https://github.com/CodeWithCJ/SparkyFitness/wiki/Android-Mobile-App) |
-| Join our Discord | [https://discord.gg/vcnMT5cPEA](https://discord.gg/vcnMT5cPEA) |
-| Weblate Translations | [https://hosted.weblate.org/engage/sparkyfitness](https://hosted.weblate.org/engage/sparkyfitness) |
+### 运动信息
 
+| 字段 | 描述 |
+|-------|-------------|
+| 名称 | 官方运动名称 |
+| 主要肌肉 | 目标肌肉群 |
+| 辅助肌肉 | 支撑肌肉群 |
+| 器械 | 所需器械（杠铃、哑铃、器械、自重） |
+| 难度 | 初级、中级或高级 |
+| 说明 | 分步执行指南 |
+| 视频 | 示范视频链接 |
+
+### 器械类型
+
+| 器械 | 描述 |
+|-----------|-------------|
+| 杠铃 | 带杠铃片的长杆 |
+| 哑铃 | 手持重量 |
+| 器械 | 固定路径的训练器械 |
+| 龙门架 | 可调节的绳索器械 |
+| 自重 | 无需器械 |
+| 壶铃 | 带手柄的球形重量 |
+| 弹力带 | 用于阻力的弹性带 |
+| TRX | 悬挂训练带 |
+
+## 锻炼跟踪
+
+### 创建锻炼
+
+| 步骤 | 操作 |
+|------|--------|
+| 1 | 开始新的锻炼会话 |
+| 2 | 从运动库中选择运动 |
+| 3 | 记录组数、次数、重量和时长 |
+| 4 | 为每个运动添加备注 |
+| 5 | 完成并保存锻炼 |
+
+### 组类型
+
+| 类型 | 描述 |
+|------|-------------|
+| 正式组 | 标准重量的标准组 |
+| 热身组 | 较轻重量以准备肌肉 |
+| 递减组 | 达到力竭后减轻重量 |
+| 暂停休息 | 短暂休息后继续同一组 |
+| AMRAP | 尽可能多的次数 |
+| 计时 | 执行固定时长 |
+
+### 记录字段
+
+| 字段 | 描述 |
+|-------|-------------|
+| 重量 | 使用的重量（kg 或 lbs） |
+| 次数 | 完成的重复次数 |
+| 时长 | 计时运动的时间（秒） |
+| RPE | 主观疲劳感觉（1-10 分） |
+| 备注 | 该组的自由备注 |
+
+## 训练计划
+
+### 计划结构
+
+| 层级 | 描述 |
+|-------|-------------|
+| Program | 多周训练计划 |
+| Week | 锻炼日的集合 |
+| Day | 包含运动的具体锻炼 |
+| Exercise | 带有规定组数/次数的单个运动 |
+
+### 热门计划模板
+
+| 计划 | 重点 | 频率 |
+|---------|-------|-----------|
+| Starting Strength | 初学者力量 | 每周 3 天 |
+| PPL (推/拉/腿) | 肌肥大 | 每周 6 天 |
+| 上肢/下肢 | 均衡训练 | 每周 4 天 |
+| 全身 | 综合健身 | 每周 3 天 |
+| 5/3/1 | 力量进阶 | 每周 4 天 |
+
+### 计划自定义
+
+| 设置 | 描述 |
+|---------|-------------|
+| 时长 | 计划的周数 |
+| 频率 | 每周锻炼天数 |
+| 进阶 | 重量/次数随时间的增长方式 |
+| 减载 | 计划中的恢复周 |
+| 分化 | 肌肉群在各天的分配方式 |
+
+## 进度跟踪
+
+### 指标
+
+| 指标 | 描述 |
+|--------|-------------|
+| 总容量 | 所有组的重量 x 次数之和 |
+| 最大重量 | 每个运动的最重重量 |
+| 总次数 | 完成的总重复次数 |
+| 锻炼时长 | 运动花费的时间 |
+| 体重 | 随时间的体重测量 |
+| 身体围度 | 胸围、腰围、臂围、腿围 |
+
+### 可视化
+
+| 图表类型 | 显示的数据 |
+|-----------|---------------|
+| 折线图 | 重量随时间的进阶 |
+| 柱状图 | 每周每个肌肉群的容量 |
+| 热力图 | 锻炼频率日历 |
+| 饼图 | 肌肉群分布 |
+
+## 营养集成
+
+### 营养跟踪字段
+
+| 字段 | 描述 |
+|-------|-------------|
+| 卡路里 | 每日卡路里摄入量 |
+| 蛋白质 | 摄入的蛋白质克数 |
+| 碳水化合物 | 摄入的碳水化合物克数 |
+| 脂肪 | 摄入的脂肪克数 |
+| 水 | 每日饮水量（升） |
+
+### 膳食计划
+
+| 餐次 | 典型内容 |
+|------|----------------|
+| 早餐 | 高蛋白的早晨开始 |
+| 午餐 | 均衡宏量营养素搭配蔬菜 |
+| 晚餐 | 瘦肉蛋白搭配复合碳水化合物 |
+| 加餐 | 正餐之间的健康选择 |
+| 训练前 | 训练前的快速能量 |
+| 训练后 | 用于恢复的蛋白质和碳水化合物 |
+
+## API 和集成
+
+### API 端点
+
+| 端点 | 方法 | 描述 |
+|----------|--------|-------------|
+| `/api/workouts` | GET | 列出用户锻炼 |
+| `/api/workouts` | POST | 创建新锻炼 |
+| `/api/exercises` | GET | 列出运动 |
+| `/api/programs` | GET | 列出训练计划 |
+| `/api/stats` | GET | 获取用户统计数据 |
+
+## 总结
+
+| 主题 | 核心要点 |
+|-------|-------------|
+| 运动库 | 包含肌肉群定位的全面数据库 |
+| 跟踪 | 记录每个运动的组数、次数、重量和 RPE |
+| 计划 | 预制和可自定义的多周计划 |
+| 进度 | 可视化图表跟踪随时间的改善 |
+| 营养 | 可选的膳食和宏量营养素跟踪集成 |
+| 自托管 | 完全控制您的健身数据 |

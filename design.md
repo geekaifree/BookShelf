@@ -1,312 +1,318 @@
-# 开发者设计资源
+# 开发者设计资源：精选指南
 
-精选设计资源集合，涵盖图片素材、配色方案、字体、图标、插画、图案、UI 套件、CSS 框架、动画和响应式设计工具。
+## 简介
 
----
+design-resources-for-developers 仓库是一个为开发者精选的免费设计资源集合。它包括 UI 套件、模板、图标、字体、颜色和工具，帮助开发者在没有专业设计师的情况下创建专业外观的应用程序。本教程组织并解释了关键资源类别。
 
-## 图片素材
+## 为什么开发者需要设计资源
 
-| 平台 | 许可证 | 库大小 | 分辨率 | API | 费用 |
-|----------|---------|--------------|------------|-----|------|
-| Unsplash | Unsplash License | 300 万+ | 最高 5K | 是 | 免费 |
-| Pexels | Pexels License | 300 万+ | 最高 4K | 是 | 免费 |
-| Pixabay | Pixabay License | 250 万+ | 最高 4K | 是 | 免费 |
-| StockSnap | CC0 | 10 万+ | 高分辨率 | 否 | 免费 |
-| Burst | Shopify License | 1000+ | 高分辨率 | 否 | 免费 |
+| 挑战 | 解决方案 |
+|------|----------|
+| 没有设计团队 | 使用预制 UI 套件和模板 |
+| 样式不一致 | 采用设计系统和调色板 |
+| 时间紧迫 | 从模板开始并自定义 |
+| 技能差距 | 使用内置最佳实践的工具 |
 
-**Unsplash** - 高分辨率图片，无需署名，提供嵌入 API。
-**Pexels** - 免费图片和视频，精选合集，可编程访问。
-**Pixabay** - 图片、插画、矢量图和视频，无需注册。
+## 资源类别
 
----
+| 类别 | 数量 | 描述 |
+|------|------|------|
+| UI 套件 | 100+ | 用于界面的组件库 |
+| 模板 | 200+ | 现成的页面布局 |
+| 图标 | 50+ | 图标库和集合 |
+| 字体 | 30+ | 免费的 Web 字体 |
+| 颜色 | 20+ | 调色板和生成器 |
+| 插图 | 30+ | SVG 和 PNG 图形 |
+| 图片素材 | 20+ | 免费使用的摄影 |
+| 工具 | 40+ | 设计和原型工具 |
 
-## 配色方案
+## UI 组件库
 
-| 工具 | 类型 | 导出格式 | 协作 | 无障碍检查 | 费用 |
-|------|------|----------------|---------------|---------------------|------|
-| Coolors | 生成器 | CSS、SCSS、SVG、PDF | 是 | 是 | 免费/专业版 |
-| Adobe Color | 色轮 + 提取器 | ASE、CSS、SCSS | 是 | 是 | 免费 |
-| Color Hunt | 精选配色 | HEX 代码 | 否 | 否 | 免费 |
-| Paletton | 色轮生成器 | CSS、SCSS、XML | 否 | 否 | 免费 |
-| Khroma | AI 生成器 | CSS、SCSS、SVG | 否 | 否 | 免费 |
+### CSS 框架
 
-**Coolors** - 按空格键生成配色，锁定颜色，色盲模拟。
-**Adobe Color** - 色轮、从图片提取、和谐规则（互补、类似、三色）。
-**Color Hunt** - 每日更新配色，简洁界面，一键复制。
+| 框架 | 风格 | 最适用于 |
+|------|------|----------|
+| Bootstrap | 基于组件 | 快速原型 |
+| Tailwind CSS | 实用工具优先 | 自定义设计 |
+| Bulma | 基于 Flexbox | 简洁界面 |
+| Material UI | Google Material | Android 风格应用 |
+| Chakra UI | 模块化 React | React 应用 |
+| Ant Design | 企业级 | 管理仪表板 |
 
-**CSS 示例：**
-```css
-:root {
-  --primary: #264653;
-  --secondary: #2a9d8f;
-  --accent: #e9c46a;
-}
-```
+### Tailwind CSS 示例
 
----
-
-## 字体
-
-| 平台 | 字体数量 | 免费字体 | Web 字体 | 桌面使用 | 费用 |
-|----------|------------|------------|-----------|-------------|------|
-| Google Fonts | 1500+ | 全部 | 是 | 是 | 免费 |
-| Font Squirrel | 1000+ | 大部分 | 部分 | 是 | 免费/商业 |
-| DaFont | 60000+ | 许多 | 有限 | 各异 | 免费/付费 |
-| Adobe Fonts | 20000+ | CC 附带 | 是 | 是 | CC 订阅 |
-| Fontsource | 1500+ | 全部 | 是 | NPM 包 | 免费 |
-
-**Google Fonts** - 最大的免费字体库，CDN 托管，支持可变字体。
 ```html
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
-```
-
-**Font Squirrel** - 可商用字体，字体识别工具，Web 字体生成器。
-**DaFont** - 海量字体库，下载前预览，分类浏览。
-
----
-
-## 图标
-
-| 库 | 数量 | 格式 | 可定制 | 框架 | 许可证 |
-|---------|-------|--------|--------------|------------|---------|
-| Font Awesome | 2000+（免费） | SVG、Web Font | 是 | React、Vue、Angular | 免费/专业版 |
-| Feather Icons | 280+ | SVG | 是 | React、Vue、Angular | MIT |
-| Material Icons | 2500+ | SVG、Web Font | 有限 | React、Flutter | Apache 2.0 |
-| Heroicons | 300+ | SVG | 是 | React、Vue | MIT |
-| Lucide | 1400+ | SVG | 是 | React、Vue、Svelte | ISC |
-
-**Font Awesome** - 最流行，solid/regular/light 样式，动画图标。
-```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<i class="fas fa-home"></i>
-```
-
-**Feather Icons** - 极简设计，24x24 网格，轻量。
-```html
-<script src="https://unpkg.com/feather-icons"></script>
-<script>feather.replace();</script>
-<i data-feather="home"></i>
-```
-
-**Material Icons** - Google 的 Material Design，多种样式（填充、轮廓、圆角）。
-```html
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-<span class="material-icons">home</span>
-```
-
----
-
-## 插画
-
-| 库 | 风格 | 可定制 | 格式 | 许可证 | 数量 |
-|---------|-------|--------------|---------|---------|-------|
-| unDraw | 扁平、现代 | 通过 URL 改色 | SVG | MIT | 1000+ |
-| Humaaans | 人物 | 混搭 | SVG、PNG、Figma | CC0 | 模块化 |
-| Blush | 多种风格 | 是 | SVG、PNG、Figma | 免费/专业版 | 合集 |
-| Storyset | 多种风格 | 颜色、背景 | SVG、PNG | 免费 | 1000+ |
-| Open Peeps | 手绘 | 混搭 | SVG、PNG、Sketch | CC0 | 模块化 |
-
-**unDraw** - 通过 URL 自定义颜色，风格统一，无需署名。
-```html
-<img src="https://undraw.co/illustrations/svg/design_tools.svg" alt="Design">
-```
-
-**Humaaans** - 模块化组件（头部、身体、腿部），姿势定制。
-**Blush** - 多种艺术风格，Figma 插件，混搭组件。
-
----
-
-## 图案
-
-| 工具 | 类型 | 可定制 | 格式 | 许可证 | 数量 |
-|------|------|--------------|--------|---------|-------|
-| Hero Patterns | SVG 图案 | 颜色、透明度 | SVG、CSS | CC0 | 100+ |
-| CSS Patterns | 纯 CSS | 颜色、大小 | CSS | MIT | 100+ |
-| Pattern.monster | SVG 图案 | 是 | SVG | MIT | 100+ |
-| Subtle Patterns | 纹理 | 否 | PNG | CC BY-SA | 400+ |
-| Patternico | 生成图案 | 是 | PNG | 免费 | 自定义 |
-
-**Hero Patterns** - 可重复 SVG 图案，颜色和透明度可控。
-**CSS Patterns** - 无图片请求，纯 CSS 渐变。
-```css
-.pattern-stripes {
-  background: repeating-linear-gradient(
-    45deg, transparent, transparent 10px,
-    #f0f0f0 10px, #f0f0f0 20px
-  );
-}
-.pattern-dots {
-  background: radial-gradient(circle, #ddd 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-```
-
----
-
-## UI 套件
-
-| 平台 | 生态 | 格式 | 协作 | 免费套件 | 费用 |
-|----------|-----------|---------|---------------|-----------|------|
-| Figma Community | Figma | Figma 文件 | 是 | 数千 | 免费 |
-| Sketch App Sources | Sketch | Sketch 文件 | 有限 | 数百 | 免费/付费 |
-| UI8 | 多平台 | Figma、Sketch、XD | 是 | 有限 | 付费 |
-| Freebiesbug | 多平台 | 多种 | 否 | 全部 | 免费 |
-| FigmaCrush | Figma | Figma 文件 | 是 | 全部 | 免费 |
-
-**Figma Community** - 直接集成，实时协作，克隆并自定义。
-**Sketch App Sources** - 精选质量，Sketch 专用资源，定期更新。
-
----
-
-## CSS 框架
-
-| 框架 | 方法 | 体积（min+gz） | 可定制 | 学习曲线 | 栅格 |
-|-----------|----------|---------------|---------------|----------------|------|
-| Bootstrap | 工具类 + 组件 | 22KB | Sass 变量 | 低 | Flexbox/Grid |
-| Tailwind CSS | 工具类优先 | 10KB（purged） | 配置文件 | 中等 | Flexbox/Grid |
-| Bulma | 基于组件 | 26KB | Sass 变量 | 低 | Flexbox |
-| Foundation | 基于组件 | 18KB | Sass 变量 | 中等 | Flexbox |
-| Materialize | Material Design | 16KB | Sass 变量 | 低 | Flexbox |
-
-**Bootstrap** - 最流行，响应式栅格，丰富组件。
-```html
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-<div class="container">
-  <div class="row">
-    <div class="col-md-6">Column 1</div>
-    <div class="col-md-6">Column 2</div>
+<!-- Tailwind 卡片组件 -->
+<div class="max-w-sm rounded overflow-hidden shadow-lg">
+  <img class="w-full" src="/img/card-top.jpg" alt="Card image">
+  <div class="px-6 py-4">
+    <div class="font-bold text-xl mb-2">Card Title</div>
+    <p class="text-gray-700 text-base">
+      Card description goes here.
+    </p>
+  </div>
+  <div class="px-6 pt-4 pb-2">
+    <span class="inline-block bg-gray-200 rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">#tag</span>
   </div>
 </div>
 ```
 
-**Tailwind CSS** - 工具类优先，高度可定制，生产包极小。
-```bash
-npm install -D tailwindcss
-npx tailwindcss init
-```
+### Bootstrap 示例
+
 ```html
-<div class="flex items-center justify-between p-4 bg-white shadow-md">
-  <h1 class="text-xl font-bold text-gray-900">Logo</h1>
-  <button class="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Sign Up</button>
+<!-- Bootstrap 卡片组件 -->
+<div class="card" style="width: 18rem;">
+  <img src="/img/card-top.jpg" class="card-img-top" alt="Card image">
+  <div class="card-body">
+    <h5 class="card-title">Card Title</h5>
+    <p class="card-text">Card description goes here.</p>
+    <a href="#" class="btn btn-primary">Go somewhere</a>
+  </div>
 </div>
 ```
 
-**Bulma** - 纯 CSS（无 JavaScript），基于 Flexbox，类名简洁。
+## 模板来源
 
----
+### 免费模板网站
 
-## 动画
+| 来源 | 类型 | 许可证 |
+|------|------|--------|
+| HTML5 UP | HTML 模板 | Creative Commons |
+| Start Bootstrap | Bootstrap 主题 | MIT |
+| Tailwind UI | Tailwind 组件 | 免费 + 付费 |
+| Creative Tim | UI 套件 | 免费 + 付费 |
+| ThemeWagon | 模板 | MIT |
+| Cruip | 落地页 | 免费 + 付费 |
 
-| 库 | 类型 | 体积 | 易用性 | 性能 | 依赖 |
-|---------|------|------|-------------|-------------|--------------|
-| Animate.css | CSS 动画 | 80KB | 高 | 好 | 无 |
-| AOS | 滚动动画 | 12KB | 高 | 好 | 无 |
-| Lottie | JSON 动画 | 50KB+ | 中等 | 优秀 | Bodymovin |
-| GSAP | JavaScript 动画 | 30KB | 中等 | 优秀 | 无 |
-| Motion One | JavaScript 动画 | 6KB | 高 | 优秀 | 无 |
+### 模板类型
 
-**Animate.css** - 即用型 CSS 动画，基于类名的 API。
+| 类型 | 使用场景 | 示例 |
+|------|----------|------|
+| 落地页 | 产品营销 | SaaS、应用发布 |
+| 管理仪表板 | 后端管理 | 分析、CRUD |
+| 作品集 | 个人展示 | 开发者、设计师 |
+| 博客 | 内容发布 | 技术博客、文档 |
+| 电商 | 在线商店 | 产品列表 |
+| 文档 | 技术文档 | API 文档、指南 |
+
+## 图标库
+
+### 常用图标集
+
+| 库 | 数量 | 风格 | 格式 |
+|----|------|------|------|
+| Font Awesome | 2000+ | Solid、regular、brands | SVG、webfont |
+| Feather Icons | 280+ | 极简线条 | SVG |
+| Heroicons | 300+ | 轮廓、实心 | SVG |
+| Material Icons | 2000+ | 填充、轮廓 | SVG、webfont |
+| Ionicons | 1300+ | 轮廓、填充 | SVG |
+| Tabler Icons | 4000+ | 轮廓 | SVG |
+| Lucide | 1000+ | Feather 分支 | SVG |
+
+### 使用图标
+
 ```html
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-<h1 class="animate__animated animate__fadeIn">Hello</h1>
-<div class="animate__animated animate__bounceIn animate__delay-1s">Content</div>
+<!-- Font Awesome -->
+<i class="fas fa-home"></i>
+<i class="fab fa-github"></i>
+
+<!-- Feather Icons (JavaScript) -->
+<feather-icon name="home"></feather-icon>
+
+<!-- Heroicons (SVG inline) -->
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+  <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 12l8.954-8.955a1.126 1.126 0 011.591 0L21.75 12M4.5 9.75v10.125c0 .621.504 1.125 1.125 1.125H9.75v-4.875c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125V21h4.125c.621 0 1.125-.504 1.125-1.125V9.75M8.25 21h8.25" />
+</svg>
 ```
 
-**AOS** - 滚动触发动画，data 属性 API。
-```html
-<link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-<script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-<div data-aos="fade-up">Fade Up</div>
-<script>AOS.init({ duration: 800, once: true });</script>
-```
+## 调色板
 
-**Lottie** - After Effects 动画导出为 JSON，文件小，可交互。
-```html
-<script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
-<lottie-player src="animation.json" background="transparent" speed="1"
-  style="width: 300px; height: 300px" loop autoplay></lottie-player>
-```
+### 调色板工具
 
----
+| 工具 | 用途 | URL |
+|------|------|-----|
+| Coolors | 生成调色板 | coolors.co |
+| Color Hunt | 浏览调色板 | colorhunt.co |
+| Adobe Color | 创建调色板 | color.adobe.com |
+| Paletton | 颜色关系 | paletton.com |
+| Tailwind Colors | Tailwind 调色板 | tailwindcss.com/docs/colors |
 
-## 响应式设计工具
+### 常用配色方案
 
-| 工具 | 类型 | 功能 | 集成 | 费用 |
-|------|------|----------|-------------|------|
-| Chrome DevTools | 浏览器 | 设备模拟、网络节流 | Chrome | 免费 |
-| Responsively | 桌面应用 | 多设备预览 | 所有浏览器 | 免费 |
-| BrowserStack | 云 | 真实设备、3000+ 浏览器 | CI/CD | 付费 |
-| LambdaTest | 云 | 真实设备、实时测试 | CI/CD | 免费/付费 |
-| ScreenFly | Web | 快速设备测试 | 任何浏览器 | 免费 |
+| 方案 | 颜色 | 使用场景 |
+|------|------|----------|
+| 单色 | 单一色调变化 | 简洁、极简 |
+| 互补色 | 对比色 | 高对比度 |
+| 类似色 | 相邻色 | 和谐 |
+| 三色 | 三个等距色 | 鲜艳 |
+| 分裂互补 | 一个基色 + 互补色两侧 | 平衡 |
 
-**Chrome DevTools** - `Ctrl+Shift+M`（Windows）或 `Cmd+Shift+M`（Mac）进入设备模式。
-**Responsively** - 并排多设备预览，同步滚动。
+### CSS 自定义属性
 
-**CSS 媒体查询：**
 ```css
-/* 移动优先 */
-.container { width: 100%; padding: 16px; }
-@media (min-width: 768px) { .container { max-width: 720px; margin: 0 auto; } }
-@media (min-width: 1024px) { .container { max-width: 960px; } }
-@media (min-width: 1280px) { .container { max-width: 1200px; } }
+:root {
+  --color-primary: #3b82f6;
+  --color-primary-dark: #2563eb;
+  --color-secondary: #10b981;
+  --color-accent: #f59e0b;
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-bg: #ffffff;
+  --color-bg-alt: #f9fafb;
+  --color-border: #e5e7eb;
+  --color-error: #ef4444;
+  --color-success: #22c55e;
+}
 ```
 
-**常用断点：**
+## 字体排版
 
-| 设备 | 宽度 | 典型用途 |
-|--------|-------|-------------|
-| 小屏手机 | 320px | 旧款手机 |
-| 大屏手机 | 375px | iPhone SE、12/13 |
-| 平板 | 768px | iPad 竖屏 |
-| 大平板 | 1024px | iPad 横屏 |
-| 笔记本 | 1280px | 小型笔记本 |
-| 桌面 | 1440px | 标准桌面 |
+### 免费字体来源
 
----
+| 来源 | 字体数 | 质量 |
+|------|--------|------|
+| Google Fonts | 1500+ | 高 |
+| Font Squirrel | 1000+ | 精选 |
+| DaFont | 5000+ | 参差不齐 |
+| Fontsquirrel | 1000+ | 商业免费 |
 
-## 最佳实践
+### 字体搭配
 
-### 性能
-- 使用 WebP 格式，JPEG 作为回退
-- 使用 `loading="lazy"` 实现懒加载
-- 使用 `srcset` 提供响应式图片
-- Web 字体使用 `font-display: swap`
-- 仅动画化 `transform` 和 `opacity`
+| 标题字体 | 正文字体 | 风格 |
+|----------|----------|------|
+| Inter | Inter | 现代、简洁 |
+| Playfair Display | Source Sans Pro | 优雅、编辑风格 |
+| Montserrat | Open Sans | 专业、友好 |
+| Poppins | Lato | 几何、易读 |
+| Roboto | Roboto | 中性、通用 |
 
-### 无障碍
-- 普通文本最低 4.5:1 对比度
-- 大文本最低 3:1 对比度
-- 纯图标按钮添加 `aria-label`
-- 不要在没有替代方案的情况下移除 `outline`
+### 字体比例
+
 ```css
-:focus-visible { outline: 2px solid #2a9d8f; outline-offset: 2px; }
+/* 模块化比例（1.25 比率） */
+.text-xs { font-size: 0.75rem; }     /* 12px */
+.text-sm { font-size: 0.875rem; }    /* 14px */
+.text-base { font-size: 1rem; }      /* 16px */
+.text-lg { font-size: 1.125rem; }    /* 18px */
+.text-xl { font-size: 1.25rem; }     /* 20px */
+.text-2xl { font-size: 1.5rem; }     /* 24px */
+.text-3xl { font-size: 1.875rem; }   /* 30px */
+.text-4xl { font-size: 2.25rem; }    /* 36px */
+.text-5xl { font-size: 3rem; }       /* 48px */
 ```
 
-### 许可证
+## 插图
 
-| 许可证 | 商用 | 署名 | 修改 |
-|---------|---------------|-------------|--------------|
-| MIT | 是 | 需要 | 是 |
-| CC0 | 是 | 否 | 是 |
-| CC BY | 是 | 是 | 是 |
-| CC BY-SA | 是 | 是 | 是（同许可证） |
-| CC BY-NC | 否 | 是 | 是 |
-| Unsplash | 是 | 否 | 是 |
-| Pexels | 是 | 否 | 是 |
+### 免费插图来源
 
----
+| 来源 | 风格 | 格式 |
+|------|------|------|
+| unDraw | 极简、可自定义颜色 | SVG |
+| Humaaans | 模块化人物 | SVG、Figma |
+| Blush | 插画场景 | SVG、Figma |
+| Open Peeps | 人物插图 | SVG、PNG |
+| Storyset | 动画插图 | SVG、GIF |
+| DrawKit | 手绘风格 | SVG、PNG |
 
-## 快速参考
+### 使用 unDraw
 
-- **图片：** [Unsplash](https://unsplash.com)、[Pexels](https://pexels.com)
-- **配色：** [Coolors](https://coolors.co)、[Adobe Color](https://color.adobe.com)
-- **字体：** [Google Fonts](https://fonts.google.com)、[Font Squirrel](https://www.fontsquirrel.com)
-- **图标：** [Font Awesome](https://fontawesome.com)、[Feather Icons](https://feathericons.com)
-- **插画：** [unDraw](https://undraw.co)、[Humaaans](https://www.humaaans.com)
-- **图案：** [Hero Patterns](https://heropatterns.com)
-- **UI 套件：** [Figma Community](https://www.figma.com/community)
-- **CSS 框架：** [Bootstrap](https://getbootstrap.com)、[Tailwind CSS](https://tailwindcss.com)
-- **动画：** [Animate.css](https://animate.style)、[AOS](https://michalsnik.github.io/aos/)
-- **测试：** [Chrome DevTools](https://developer.chrome.com/docs/devtools/)、[Responsively](https://responsively.app)
+```html
+<!-- 带自定义颜色的内联 SVG -->
+<img src="https://undraw.co/api/illustrations/your-id/svg?color=3b82f6"
+     alt="插图描述"
+     class="w-96 h-auto">
+```
+
+## 图片素材
+
+### 免费图片来源
+
+| 来源 | 许可证 | 质量 |
+|------|--------|------|
+| Unsplash | 免费使用 | 高 |
+| Pexels | 免费使用 | 高 |
+| Pixabay | 免费使用 | 参差不齐 |
+| Burst (Shopify) | 免费使用 | 电商导向 |
+| StockSnap | Creative Commons | 高 |
+
+## 设计工具
+
+### 免费设计工具
+
+| 工具 | 用途 | 平台 |
+|------|------|------|
+| Figma | UI 设计和原型 | Web、桌面 |
+| Penpot | 开源设计工具 | Web、桌面 |
+| Inkscape | 矢量图形 | 桌面 |
+| GIMP | 图片编辑 | 桌面 |
+| Canva | 快速设计和图形 | Web |
+| Excalidraw | 手绘图表 | Web |
+
+### 原型工具
+
+| 工具 | 保真度 | 最适用于 |
+|------|--------|----------|
+| Figma | 高 | 交互式原型 |
+| Framer | 高 | 动画原型 |
+| Balsamiq | 低 | 线框图 |
+| Whimsical | 中 | 流程和线框图 |
+
+## 响应式设计
+
+### 断点参考
+
+| 断点 | 宽度 | 设备 |
+|------|------|------|
+| sm | 640px | 小手机（横屏） |
+| md | 768px | 平板 |
+| lg | 1024px | 小笔记本 |
+| xl | 1280px | 桌面 |
+| 2xl | 1536px | 大屏幕 |
+
+### CSS Grid 示例
+
+```css
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem;
+}
+
+.card {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+}
+```
+
+## 无障碍
+
+### 基本实践
+
+| 实践 | 描述 |
+|------|------|
+| 颜色对比 | 文本最低 4.5:1 比率 |
+| 替代文本 | 描述所有图片 |
+| 键盘导航 | 所有交互元素可聚焦 |
+| ARIA 标签 | 为图标按钮添加标签 |
+| 焦点可见 | 显示焦点指示器 |
+| 语义化 HTML | 使用正确的标题层次 |
+
+### 对比度检查
+
+```javascript
+// 检查对比度比率
+function getContrastRatio(hex1, hex2) {
+  const l1 = getLuminance(hex1);
+  const l2 = getLuminance(hex2);
+  const lighter = Math.max(l1, l2);
+  const darker = Math.min(l1, l2);
+  return (lighter + 0.05) / (darker + 0.05);
+}
+```
+
+## 总结
+
+design-resources-for-developers 集合提供了在没有设计背景的情况下构建专业界面所需的一切。使用 UI 组件库构建结构，使用图标集进行视觉传达，使用颜色工具保持调色板一致，使用字体排版指南确保文本可读。结合这些资源创建精美的、无障碍的应用程序。
